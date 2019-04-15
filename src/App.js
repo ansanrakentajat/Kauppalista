@@ -58,7 +58,11 @@ class App extends Component {
       unit: unit,
       completed: false
     };
-    this.setState({ items: [...this.state.items, newItem] });
+    this.setState({ items: [...this.state.items, newItem] }, () => {
+      console.log('state', this.state);
+      localStorage.setItem('munOstoslista', JSON.stringify(this.state));
+    });
+    
   }
 
 
