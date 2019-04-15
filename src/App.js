@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import ShoppingList from './components/ShoppingList';
 import uuid from 'uuid';
+import About from './views/About';
+import TestNav from './components/TestNav';
 
 
 class App extends Component {
@@ -50,18 +53,27 @@ class App extends Component {
       title: title,
       completed: false
     };
-    this.setState({items: [...this.state.items, newItem]})
+    this.setState({ items: [...this.state.items, newItem] })
   }
 
 
   render() {
     return (
-      <div className="App">
-        <div className="container">
-          <h1>App</h1>
-          <ShoppingList stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem}/>
+      <Router>
+        <div className="App">
+          <div className="container">
+            <TestNav />
+            <Route exact path="/" render={props => (
+              <React.Fragment>
+                <ShoppingList {...props} stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+              </React.Fragment>
+            )}>
+
+            </Route>
+            <Route path="/about" component={About}></Route>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
