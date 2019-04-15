@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class AddItem extends Component {
     
@@ -27,5 +28,10 @@ class AddItem extends Component {
         )
     }
 }
+
+AddItem.propTypes = {
+    addItem: PropTypes.func.isRequired
+}
+
 
 export default AddItem

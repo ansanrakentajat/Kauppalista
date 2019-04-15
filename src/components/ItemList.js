@@ -23,7 +23,9 @@ class ItemList extends Component {
 }
 
 ItemList.propTypes = {
-  stateItemsForItemList: PropTypes.array.isRequired
+  stateItemsForItemList: PropTypes.array.isRequired,
+  markComplete: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired
 }
 
 export default ItemList

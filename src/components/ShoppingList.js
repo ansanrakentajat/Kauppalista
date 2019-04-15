@@ -16,7 +16,9 @@ class ShoppingList extends Component {
 }
 
 ShoppingList.propTypes = {
-    stateItemsForShoppingList: PropTypes.array.isRequired
+    stateItemsForShoppingList: PropTypes.array.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired
 }
 
 export default ShoppingList

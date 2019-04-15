@@ -31,7 +31,9 @@ class Item extends Component {
 }
 
 Item.propTypes = {
-  itemForItem: PropTypes.object.isRequired
+  itemForItem: PropTypes.object.isRequired,
+  markComplete: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired
 }
 
 const inputStyle = {
