@@ -8,7 +8,7 @@ class ShoppingList extends Component {
         return (
             <React.Fragment>
                 <p>this is a shopping list</p>
-                <AddItem/>
+                <AddItem addItem={this.props.addItem}/>
                 <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
             </React.Fragment>
         )

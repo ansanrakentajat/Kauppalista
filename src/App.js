@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import ShoppingList from './components/ShoppingList';
+import uuid from 'uuid';
 
 
 class App extends Component {
   state = {
     items: [
       {
-        id: 1,
+        id: uuid.v4(),
         title: 'Maito',
         amount: '1 kpl',
         collected: false
       },
       {
-        id: 2,
+        id: uuid.v4(),
         title: 'Kananmuna',
         amount: '12 kpl',
         collected: false
       },
       {
-        id: 3,
+        id: uuid.v4(),
         title: 'Leipä',
         amount: '1 pss',
         collected: false
@@ -43,12 +44,23 @@ class App extends Component {
     this.setState({ items: [...this.state.items.filter(item => item.id !== id)] });
   }
 
+  addItem = (title) => {
+    const newItem = {
+      id: uuid.v4(),
+      title: title,
+      completed: false
+    };
+    this.setState({items: [...this.state.items, newItem]})
+  }
+
 
   render() {
     return (
       <div className="App">
-        <h1>App</h1>
-        <ShoppingList stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} />
+        <div className="container">
+          <h1>App</h1>
+          <ShoppingList stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem}/>
+        </div>
       </div>
     );
   }
