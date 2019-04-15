@@ -10,7 +10,6 @@ class AddItem extends Component {
 
     }
     
-
     handleOnSubmit = (e) => {
         e.preventDefault();
         this.props.addItem(this.state.title, this.state.amount, this.state.unit);
@@ -46,6 +45,5 @@ class AddItem extends Component {
 AddItem.propTypes = {
     addItem: PropTypes.func.isRequired
 }
-
 
 export default AddItem

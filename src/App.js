@@ -36,7 +36,7 @@ class App extends Component {
 
   markComplete = (id) => {
     this.setState({
-      todo: this.state.items.map(item => {
+      items: this.state.items.map(item => {
         if (item.id === id) {
           item.collected = !item.collected;
         }
