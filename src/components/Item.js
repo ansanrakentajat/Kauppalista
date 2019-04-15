@@ -22,6 +22,7 @@ class Item extends Component {
         <div style={this.getStyle()}>
           <input type='checkbox' style={inputStyle} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)}></input>
           <p style={pStyle}>{this.props.itemForItem.amount}</p>
+          <p style={pStyle}>{this.props.itemForItem.unit}</p>
           <p style={pStyle}>{this.props.itemForItem.title}</p>
           <button style={buttonStyle} onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}>X</button>
         </div>

@@ -13,19 +13,22 @@ class App extends Component {
       {
         id: uuid.v4(),
         title: 'Maito',
-        amount: '1 kpl',
+        amount: '1',
+        unit: 'kpl',
         collected: false
       },
       {
         id: uuid.v4(),
         title: 'Kananmuna',
-        amount: '12 kpl',
+        amount: '12',
+        unit: 'kpl',
         collected: false
       },
       {
         id: uuid.v4(),
         title: 'Leipä',
-        amount: '1 pss',
+        amount: '1',
+        unit: 'pss',
         collected: false
       }
     ]
@@ -47,13 +50,15 @@ class App extends Component {
     this.setState({ items: [...this.state.items.filter(item => item.id !== id)] });
   }
 
-  addItem = (title) => {
+  addItem = (title, amount, unit) => {
     const newItem = {
       id: uuid.v4(),
       title: title,
+      amount: amount,
+      unit: unit,
       completed: false
     };
-    this.setState({ items: [...this.state.items, newItem] })
+    this.setState({ items: [...this.state.items, newItem] });
   }
 
 
