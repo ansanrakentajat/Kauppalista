@@ -5,13 +5,11 @@ import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
     render() {
-        console.log(this.props.stateItemsForShoppingList, 'moi from shopping list!');
-        
         return (
             <React.Fragment>
                 <p>this is a shopping list</p>
                 <AddItem/>
-                <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList}/>
+                <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} />
             </React.Fragment>
         )
     }
