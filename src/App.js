@@ -28,13 +28,19 @@ class App extends Component {
   }
 
   markComplete = (id) => {
-    this.setState({ todo: this.state.items.map(item => {
-      if (item.id === id) {
-        item.collected = !item.collected;
-      }
-      return item;
-    }) });
+    this.setState({
+      todo: this.state.items.map(item => {
+        if (item.id === id) {
+          item.collected = !item.collected;
+        }
+        return item;
+      })
+    });
 
+  }
+
+  deleteItem = (id) => {
+    this.setState({ items: [...this.state.items.filter(item => item.id !== id)] });
   }
 
 
@@ -42,7 +48,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>App</h1>
-        <ShoppingList stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} />
+        <ShoppingList stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} />
       </div>
     );
   }

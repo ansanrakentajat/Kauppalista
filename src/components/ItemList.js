@@ -8,7 +8,7 @@ class ItemList extends Component {
       <React.Fragment>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {this.props.stateItemsForItemList.map(item => (
-            <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete}/>
+            <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem}/>
           ))}
         </div>
       </React.Fragment>
