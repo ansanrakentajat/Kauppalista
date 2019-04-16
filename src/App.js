@@ -5,6 +5,7 @@ import ShoppingList from './components/ShoppingList';
 import uuid from 'uuid';
 import About from './views/About';
 import TestNav from './components/TestNav';
+import FrontPage from './views/FrontPage';
 
 
 class App extends Component {
@@ -72,7 +73,8 @@ class App extends Component {
         <div className="App">
           <div className="container">
             <TestNav />
-            <Route exact path="/" render={props => (
+            <Route exact path="/" component={FrontPage}/>
+            <Route exact path="/kauppalista" render={props => (
               <React.Fragment>
                 <ShoppingList {...props} stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
