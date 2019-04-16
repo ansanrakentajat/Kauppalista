@@ -75,7 +75,7 @@ class App extends Component {
   addToPantry = () => {
 
     this.setState({pantry: [...this.state.shoppingList.items]});
-
+    
     this.setState({shoppingList: {items: []}});
   }
 
