@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import About from './views/About';
 import TestNav from './components/TestNav';
 import FrontPage from './views/FrontPage';
+import Pantry from './components/Pantry';
 
 
 class App extends Component {
@@ -37,7 +38,7 @@ class App extends Component {
 
   markComplete = (id) => {
     this.setState({
-      todo: this.state.items.map(item => {
+      items: this.state.items.map(item => {
         if (item.id === id) {
           item.collected = !item.collected;
         }
@@ -57,7 +58,7 @@ class App extends Component {
       title: title,
       amount: amount,
       unit: unit,
-      completed: false
+      collected: false
     };
     this.setState({ items: [...this.state.items, newItem] }, () => {
       console.log('state', this.state);
@@ -74,12 +75,17 @@ class App extends Component {
           <div className="container">
             <TestNav />
             <Route exact path="/" component={FrontPage}/>
+            <Route exact path="/ruokakomero" render={props => (
+              <React.Fragment>
+                <Pantry {...props} stateToPantry={this.state}/>
+              </React.Fragment>
+            )}>
+            </Route>
             <Route exact path="/kauppalista" render={props => (
               <React.Fragment>
                 <ShoppingList {...props} stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
             )}>
-
             </Route>
             <Route path="/about" component={About}></Route>
           </div>
