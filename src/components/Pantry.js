@@ -6,7 +6,7 @@ class Pantry extends Component {
       
     return (
       <React.Fragment>
-          <h1>moi from Pantry</h1>
+          <h1>Ville sanoo:"Moi from Pantry!"</h1>
           <ul>{this.props.stateToPantry.items.map(element => (
            <li key={element.id}>{element.title} {element.amount} {element.unit}</li>)
           )}</ul>
