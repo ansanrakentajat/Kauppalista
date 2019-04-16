@@ -10,11 +10,10 @@ class Item extends Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '50%'
+      width: '100%'
     }
   }
 
- 
 
   render() {
     return (
