@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class ItemList extends Component {
 
   sendToDescription = (evt) => {
-    const testi =  JSON.stringify(this.props.stateItemsForItemList);
+    const testi =  JSON.stringify(this.props.wholeState);
 
     // some data
     const data = {
@@ -49,8 +49,9 @@ class ItemList extends Component {
     return (
       <React.Fragment>
         <div>
-          <button onClick={this.sendToDescription}>Send to description</button>
+          <button onClick={this.sendToDescription}>sendToDescription</button>
           <button onClick={this.fetchFromDescription}>Fetch from description</button>
+          <button onClick={this.props.addToPantry}>Add To Pantry</button>
         </div>
         
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -89,7 +90,9 @@ class ItemList extends Component {
 ItemList.propTypes = {
   stateItemsForItemList: PropTypes.array.isRequired,
   markComplete: PropTypes.func.isRequired,
-  deleteItem: PropTypes.func.isRequired
+  deleteItem: PropTypes.func.isRequired,
+  wholeState: PropTypes.object.isRequired,
+  addToPantry: PropTypes.func.isRequired
 }
 
 export default ItemList

@@ -11,45 +11,50 @@ import Pantry from './components/Pantry';
 
 class App extends Component {
   state = {
-    items: [
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1',
-        unit: 'kpl',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Kananmuna',
-        amount: '12',
-        unit: 'kpl',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Leipä',
-        amount: '1',
-        unit: 'pss',
-        collected: false
-      }
-    ]
+    pantry: [],
+    shoppingList: {
+      items: [
+        {
+          id: uuid.v4(),
+          title: 'Maito',
+          amount: '1',
+          unit: 'kpl',
+          collected: false
+        },
+        {
+          id: uuid.v4(),
+          title: 'Kananmuna',
+          amount: '12',
+          unit: 'kpl',
+          collected: false
+        },
+        {
+          id: uuid.v4(),
+          title: 'Leipä',
+          amount: '1',
+          unit: 'pss',
+          collected: false
+        }
+      ]
+    }
   }
 
   markComplete = (id) => {
     this.setState({
-      items: this.state.items.map(item => {
-        if (item.id === id) {
-          item.collected = !item.collected;
-        }
-        return item;
-      })
+      shoppingList: {
+        items: this.state.shoppingList.items.map(item => {
+          if (item.id === id) {
+            item.collected = !item.collected;
+          }
+          return item;
+        })
+      }
     });
 
   }
 
   deleteItem = (id) => {
-    this.setState({ items: [...this.state.items.filter(item => item.id !== id)] });
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } });
   }
 
   addItem = (title, amount, unit) => {
@@ -60,11 +65,18 @@ class App extends Component {
       unit: unit,
       collected: false
     };
-    this.setState({ items: [...this.state.items, newItem] }, () => {
-      console.log('state', this.state);
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items, newItem] } }, () => {
+      console.log('Here is the whole state after adding shopping list item', this.state);
       localStorage.setItem('munOstoslista', JSON.stringify(this.state));
     });
-    
+
+  }
+
+  addToPantry = () => {
+
+    this.setState({pantry: [...this.state.shoppingList.items]});
+
+    this.setState({shoppingList: {items: []}});
   }
 
 
@@ -74,16 +86,16 @@ class App extends Component {
         <div className="App">
           <div className="container">
             <TestNav />
-            <Route exact path="/" component={FrontPage}/>
+            <Route exact path="/" component={FrontPage} />
             <Route exact path="/ruokakomero" render={props => (
               <React.Fragment>
-                <Pantry {...props} stateToPantry={this.state}/>
+                <Pantry {...props} stateToPantry={this.state} />
               </React.Fragment>
             )}>
             </Route>
             <Route exact path="/kauppalista" render={props => (
               <React.Fragment>
-                <ShoppingList {...props} stateItemsForShoppingList={this.state.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+                <ShoppingList {...props} addToPantry={this.addToPantry} wholeState={this.state} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
             )}>
             </Route>
