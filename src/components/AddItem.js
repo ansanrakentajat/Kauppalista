@@ -12,7 +12,13 @@ class AddItem extends Component {
     
     handleOnSubmit = (e) => {
         e.preventDefault();
-        this.props.addItem(this.state.title, this.state.amount, this.state.unit);
+        const alkukirjain = this.state.title[0].toUpperCase();
+        const muutKirjaimet = this.state.title.slice(1);
+        const isollaAlkukirjaimella = alkukirjain + muutKirjaimet;
+        console.log('alkukirjain :', alkukirjain);
+        console.log('muutKirjaimet :', muutKirjaimet);
+        console.log('isollaAlkukirjaimella :', isollaAlkukirjaimella);
+        this.props.addItem(isollaAlkukirjaimella, this.state.amount, this.state.unit);
         this.setState({title: '', amount: '', unit: ''});
     }
 
