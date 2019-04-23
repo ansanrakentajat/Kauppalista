@@ -7,6 +7,7 @@ import About from './views/About';
 import TestNav from './components/TestNav';
 import FrontPage from './views/FrontPage';
 import Pantry from './components/Pantry';
+import Login from './views/Login';
 
 
 class App extends Component {
@@ -87,9 +88,9 @@ class App extends Component {
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     // luodaan uusi Set-objekti, joka sisältää kaikki uniikit ostoslistan titlet
     const setOfUniqueTitles = new Set(this.state.shoppingList.items.map(item => item.title));
-    
+
     //console.log(setOfUniqueTitles);
-    
+
     // tehdään array, johon laitetaan useampi array. Nämä arrayt sisältävät kaikki samannimiset ostoslistan rivit
     const arrayByTitle = [];
     // loopataan setOfUniqueTitles läpi ja kullakin kierroksella luodaan array, johon filteröity sen kierroksen samannimiset ostoslistan rivit
@@ -100,7 +101,7 @@ class App extends Component {
 
     //console.log('arrayByTitle', arrayByTitle);
     //console.log('toimii...');
-    
+
     // luodaan array, johon laitetaan arrayt samannimisistä ja samanyksikköisistä objekteista.
     const sameTitleAndUnitArray = [];
     // loopataan arrayByTitle läpi ja joka kierroksella luodaan uusi Set-objekti sen uniikeista yksiköistä
@@ -109,9 +110,9 @@ class App extends Component {
       // loopataan tietyn tuotteen uniikit yksiköt ja filteröidään sieltä tuotteet arrayna, jolla on sama yksikkö kuin kierroksella. 
       uniqueUnitSet.forEach(uniqueUnit => {
         const sameUnit = tuote.filter(item => item.unit === uniqueUnit);
-        
+
         //console.log('sameUnit :', sameUnit);
-        
+
         sameTitleAndUnitArray.push(sameUnit);
       });
     });
@@ -123,10 +124,10 @@ class App extends Component {
     const productsToPantryArray = [];
     sameTitleAndUnitArray.forEach(tuote => {
       const tempObject = tuote.reduce((summa, summattava) => {
-        
+
         //console.log('summa :', summa.amount);
         //console.log('summattava :', summattava.amount);
-        
+
         // muutetaan ensimmäinen objektin amount numeroksi, koska se on String
         Number(summa.amount);
         // summataan objektien numeroiksi muutetut määrät
@@ -136,7 +137,7 @@ class App extends Component {
       });
 
       //console.log('tempObject :', tempObject);
-      
+
       productsToPantryArray.push(tempObject);
     });
 
@@ -150,12 +151,12 @@ class App extends Component {
 
     });
 
-    
+
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //-----------ALLA OLEVA TOIMII-------------------------------
-    
+
     //this.setState({pantry: [...this.state.pantry, pantryynArray]});
-    
+
     // tyhjennetään staten shopping listin items-array
     this.setState({ shoppingList: { items: [] } });
   }
@@ -205,13 +206,16 @@ class App extends Component {
               </React.Fragment>
             )}>
             </Route>
-            <Route exact path="/kauppalista" render={props => (
+            <Route exact path="/ostoslista" render={props => (
               <React.Fragment>
                 <ShoppingList {...props} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
             )}>
             </Route>
             <Route path="/about" component={About}></Route>
+            <Route path="/login" render={(props) => (
+              <Login {...props} />
+            )} />
           </div>
         </div>
       </Router>

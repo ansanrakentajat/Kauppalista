@@ -6,7 +6,7 @@ class AddItem extends Component {
     state= {
         title: '',
         amount: '',
-        unit: ''
+        unit: 'l'
 
     }
     

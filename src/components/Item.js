@@ -14,12 +14,13 @@ class Item extends Component {
     }
   }
 
+  
 
   render() {
     return (
       <React.Fragment>
         <div style={this.getStyle()}>
-          <input type='checkbox' style={inputStyle} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)}></input>
+          <input type='checkbox' checked={this.props.itemForItem.collected} style={inputStyle} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)}></input>
           <p style={pStyle}>{this.props.itemForItem.amount}</p>
           <p style={pStyle}>{this.props.itemForItem.unit}</p>
           <p style={pStyle}>{this.props.itemForItem.title}</p>
