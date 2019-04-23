@@ -9,6 +9,7 @@ import FrontPage from './views/FrontPage';
 import Pantry from './components/Pantry';
 import Login from './views/Login';
 import { getFilesByTag} from './util/MediaAPI';
+import Settings from './views/Settings';
 
 
 class App extends Component {
@@ -85,6 +86,7 @@ class App extends Component {
     return this.state.user !== null;
   };
 
+  
 
   markComplete = (id) => {
     this.setState({
@@ -251,6 +253,12 @@ class App extends Component {
             <Route exact path="/ostoslista" render={props => (
               <React.Fragment>
                 <ShoppingList {...props} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+              </React.Fragment>
+            )}>
+            </Route>
+            <Route path="/asetukset" render={props => (
+              <React.Fragment>
+                <Settings {...props} setUserLogout={this.setUserLogout}/>
               </React.Fragment>
             )}>
             </Route>

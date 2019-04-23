@@ -9,7 +9,6 @@ class ShoppingList extends Component {
         return (
             <React.Fragment>
                 <div style={{width: '90%'}}>
-                <p style={{paddingTop: '10vh',}}>this is a shopping list</p>
                 <AddItem addItem={this.props.addItem} testi={this.props.stateItemsForShoppingList}/>
                 <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
                 <ShoppingListFooter addToPantry={this.props.addToPantry}/>
