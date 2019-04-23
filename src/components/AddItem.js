@@ -6,13 +6,19 @@ class AddItem extends Component {
     state= {
         title: '',
         amount: '',
-        unit: ''
+        unit: 'l'
 
     }
     
     handleOnSubmit = (e) => {
         e.preventDefault();
-        this.props.addItem(this.state.title, this.state.amount, this.state.unit);
+        const alkukirjain = this.state.title[0].toUpperCase();
+        const muutKirjaimet = this.state.title.slice(1);
+        const isollaAlkukirjaimella = alkukirjain + muutKirjaimet;
+        console.log('alkukirjain :', alkukirjain);
+        console.log('muutKirjaimet :', muutKirjaimet);
+        console.log('isollaAlkukirjaimella :', isollaAlkukirjaimella);
+        this.props.addItem(isollaAlkukirjaimella, this.state.amount, this.state.unit);
         this.setState({title: '', amount: '', unit: ''});
     }
 
@@ -22,10 +28,10 @@ class AddItem extends Component {
     render() {
         return (
             <React.Fragment>
-               <form style={{display: 'flex'}} onSubmit={this.handleOnSubmit}>
-                   <input type="text" name="title" placeholder="Item title" style={{flex: '10'}} value={this.state.title} onChange={this.handleOnChange}/>
-                   <input type="number" name="amount" placeholder="Amount"  value={this.state.amount} onChange={this.handleOnChange}/>
-                   <select name="unit"  onChange={this.handleOnChange} placeholder={this.state.unit}>
+               <form style={{display: 'flex', flexWrap: 'wrap'}} onSubmit={this.handleOnSubmit}>
+                   <input type="text" name="title" placeholder="Item title" style={{flex: '1'}} value={this.state.title} onChange={this.handleOnChange}/>
+                   <input type="number" name="amount" placeholder="Amount" style={{flex: '1'}} value={this.state.amount} onChange={this.handleOnChange}/>
+                   <select name="unit"  onChange={this.handleOnChange} style={{flex: '1'}} placeholder={this.state.unit}>
                        <option value="l">Litra</option>
                        <option value="dl">Desilitra</option>
                        <option value="ml">Millilitra</option>
