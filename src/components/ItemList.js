@@ -7,11 +7,7 @@ class ItemList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <button onClick={this.props.addToPantry}>Add To Pantry</button>
-        </div>
-
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
+        <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
 
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>OSTOSLISTA</h3>
@@ -47,8 +43,7 @@ class ItemList extends Component {
 ItemList.propTypes = {
   stateItemsForItemList: PropTypes.array.isRequired,
   markComplete: PropTypes.func.isRequired,
-  deleteItem: PropTypes.func.isRequired,
-  addToPantry: PropTypes.func.isRequired
+  deleteItem: PropTypes.func.isRequired
 }
 
 export default ItemList

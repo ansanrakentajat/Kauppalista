@@ -2,14 +2,18 @@ import React, { Component } from 'react'
 import AddItem from './AddItem';
 import ItemList from './ItemList';
 import PropTypes from 'prop-types';
+import ShoppingListFooter from './ShoppingListFooter';
 
 class ShoppingList extends Component {
     render() {
         return (
             <React.Fragment>
-                <p>this is a shopping list</p>
+                <div style={{width: '90%'}}>
+                <p style={{paddingTop: '10vh',}}>this is a shopping list</p>
                 <AddItem addItem={this.props.addItem} testi={this.props.stateItemsForShoppingList}/>
-                <ItemList addToPantry={this.props.addToPantry} stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+                <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+                <ShoppingListFooter addToPantry={this.props.addToPantry}/>
+                </div>
             </React.Fragment>
         )
     }

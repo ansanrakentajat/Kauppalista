@@ -8,10 +8,12 @@ import TestNav from './components/TestNav';
 import FrontPage from './views/FrontPage';
 import Pantry from './components/Pantry';
 import Login from './views/Login';
+import { getFilesByTag} from './util/MediaAPI';
 
 
 class App extends Component {
   state = {
+    user: null,
     pantry: [
       {
         id: uuid.v4(),
@@ -47,6 +49,42 @@ class App extends Component {
       ]
     }
   }
+
+
+  setUser = (user) => {
+
+    
+    // hae profiilikuva ja liitä se user-objektiin
+    getFilesByTag('profile').then((files) => {
+      const profilePic = files.filter((file) => {
+        let outputFile = null;
+        if (file.user_id === this.state.user.user_id) {
+          outputFile = file;
+        }
+        return outputFile;
+      });
+      this.setState((prevState) => {
+        return {
+          user: {
+            ...prevState.user,
+            profilePic: profilePic[0],
+          },
+        };
+      });
+    });
+    
+
+    this.setState({ user });
+  };
+
+  setUserLogout = (user) => {
+    this.setState({ user });
+  };
+
+  checkLogin = () => {
+    return this.state.user !== null;
+  };
+
 
   markComplete = (id) => {
     this.setState({
@@ -163,6 +201,7 @@ class App extends Component {
 
   sendToDescription = (evt) => {
     const testi = JSON.stringify(this.state);
+    const token2 = localStorage.getItem('token2');
     // some data
     const data = {
       description: `${testi}`,
@@ -172,12 +211,12 @@ class App extends Component {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5NjcsInVzZXJuYW1lIjoidmlsbGV0dW9taSIsImVtYWlsIjoidmlsbGUudHVvbWkyQG1ldHJvcG9saWEuZmkiLCJmdWxsX25hbWUiOm51bGwsImlzX2FkbWluIjpudWxsLCJ0aW1lX2NyZWF0ZWQiOiIyMDE5LTAzLTE5VDExOjMyOjU5LjAwMFoiLCJpYXQiOjE1NTQ4ODE0OTMsImV4cCI6MTU1Njk1NTA5M30.WySAqi9dfxueqxgk5YfoU-EkLSXRe1bVkiqcZul8XDY"
+        "x-access-token": token2
         // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data), // body data type must match "Content-Type" header  
     };
-    fetch('http://media.mw.metropolia.fi/wbma/media/1696', settings).then(res => {
+    fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id, settings).then(res => {
       return res.json();
     }).then(json => {
       console.log(json);
@@ -185,7 +224,7 @@ class App extends Component {
   }
 
   fetchFromDescription = (evt) => {
-    fetch('http://media.mw.metropolia.fi/wbma/media/1696').then(res => {
+    fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id).then(res => {
       return res.json();
     }).then(json => {
       console.log(JSON.parse(json.description));
@@ -199,7 +238,10 @@ class App extends Component {
         <div className="App">
           <div className="container">
             <TestNav sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} />
-            <Route exact path="/" component={FrontPage} />
+
+            <Route exact path="/" render={(props) => (
+              <Login {...props} setUser={this.setUser}/>
+            )} />
             <Route exact path="/ruokakomero" render={props => (
               <React.Fragment>
                 <Pantry {...props} stateToPantry={this.state} />
@@ -213,9 +255,7 @@ class App extends Component {
             )}>
             </Route>
             <Route path="/about" component={About}></Route>
-            <Route path="/login" render={(props) => (
-              <Login {...props} />
-            )} />
+            <Route path="/etusivu" component={FrontPage} />
           </div>
         </div>
       </Router>

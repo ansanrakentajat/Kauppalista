@@ -28,10 +28,10 @@ class AddItem extends Component {
     render() {
         return (
             <React.Fragment>
-               <form style={{display: 'flex'}} onSubmit={this.handleOnSubmit}>
-                   <input type="text" name="title" placeholder="Item title" style={{flex: '10'}} value={this.state.title} onChange={this.handleOnChange}/>
-                   <input type="number" name="amount" placeholder="Amount" value={this.state.amount} onChange={this.handleOnChange}/>
-                   <select name="unit"  onChange={this.handleOnChange} placeholder={this.state.unit}>
+               <form style={{display: 'flex', flexWrap: 'wrap'}} onSubmit={this.handleOnSubmit}>
+                   <input type="text" name="title" placeholder="Item title" style={{flex: '1'}} value={this.state.title} onChange={this.handleOnChange}/>
+                   <input type="number" name="amount" placeholder="Amount" style={{flex: '1'}} value={this.state.amount} onChange={this.handleOnChange}/>
+                   <select name="unit"  onChange={this.handleOnChange} style={{flex: '1'}} placeholder={this.state.unit}>
                        <option value="l">Litra</option>
                        <option value="dl">Desilitra</option>
                        <option value="ml">Millilitra</option>

@@ -14,6 +14,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/ostoslista"><div><Button><Avatar><Receipt /></Avatar></Button></div></Link>
                         <Link style={{ flex: '1' }} to="/reseptit"><div><Button><Avatar><LocalDining /></Avatar></Button></div></Link>
                         <Link style={{ flex: '1' }} to="/asetukset"><div><Button><Avatar><Settings /></Avatar></Button></div></Link>
+                        <Button onClick={this.props.sendToDescription}>Send state to description</Button>
+                        <Button onClick={this.props.fetchFromDescription}>Fetch state from description</Button>
                     </div>
                     <div style={{ display: 'none' }}>
                         <h1>Kauppalista</h1>
@@ -34,6 +36,8 @@ const testNavStyle = {
     color: '#fff',
     textAlign: 'center',
     padding: '10px',
+    width: '100%',
+    height: '10vh'
 
 };
 
