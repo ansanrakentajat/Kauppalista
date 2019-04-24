@@ -10,6 +10,15 @@ class Settings extends Component {
         this.props.history.push('/');
     }
 
+    componentDidMount() {
+        if (this.props.stateForLoggedIn.user === null) {
+            console.log('ET OLE KIRJAUTUNUT! SINUT SIIRRETÄÄN LOGIN-SIVULLE.');
+            this.props.history.push('/');
+        } else {
+            console.log('AI OLITKIN JO KIRJAUTUNUT.');
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -23,6 +32,7 @@ class Settings extends Component {
 Settings.propTypes = {
     setUserLogout: PropTypes.func,
     history: PropTypes.object,
+    stateForLoggedIn: PropTypes.object
 };
 
 export default Settings

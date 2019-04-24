@@ -152,6 +152,18 @@ class App extends Component {
     });
     // loopataan productsToPantryArray läpi ja päivitetään kullakin kierroksella stateen uusi tuote.
     productsToPantryArray.forEach(tuote => {
+      //%%%%%%%%%%%%%%%%%%%%%%% EHKÄ TÄHÄN VÄLIIN PVM %%%%%%%%%%%%%%%%%%%%%%%
+      const date = new Date();
+      const day = date.getDate();
+      let month = date.getMonth();
+      month++;
+      const year = date.getFullYear();
+      const dateAdded = `${day}.${month}.${year}`;
+      tuote = {...tuote, dateAdded};
+      // alempi rivi poistaa objekteista collected-propertyn
+      //delete tuote.collected;
+      console.log('tuote on: ', tuote);
+      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
@@ -187,13 +199,22 @@ class App extends Component {
     }).catch(err => console.log('tämä error tuli:', err));
   }
 
+  villenTesti = () => {
+    if (this.state.user === undefined) {
+      console.log('ei ole käyttäjää. SOO SOO!');
+      this.props.history.push('/');
+    } else {
+      console.log('on käyttäjä. JEE!');
+    }
+  }
+
 
   render() {
     return (
       <Router>
         <div className="App">
           <div className="container">
-            <TestNav sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} />
+            <TestNav />
 
             <Route exact path="/" render={(props) => (
               <Login {...props} setUser={this.setUser} />
@@ -206,13 +227,13 @@ class App extends Component {
             </Route>
             <Route exact path="/ostoslista" render={props => (
               <React.Fragment>
-                <ShoppingList {...props} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+                <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
             )}>
             </Route>
             <Route path="/asetukset" render={props => (
               <React.Fragment>
-                <Settings {...props} setUserLogout={this.setUserLogout} />
+                <Settings {...props} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
               </React.Fragment>
             )}>
             </Route>

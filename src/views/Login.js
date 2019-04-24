@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { Send } from '@material-ui/icons';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { login, checkUser, getUser } from '../util/MediaAPI';
@@ -31,7 +30,7 @@ class Login extends Component {
 
     doLogin = () => {
         login(this.state.user.username, this.state.user.password).then(response => {
-            console.log(response);
+            //console.log(response);
             if (response.user !== undefined) {
                 this.props.setUser(response.user);
                 localStorage.setItem('token2', response.token);
@@ -50,7 +49,7 @@ class Login extends Component {
         const value = target.value;
         const name = target.name;
 
-        console.log(value, name);
+        //console.log(value, name);
 
         this.setState((prevState) => ({
             user: {
@@ -172,7 +171,7 @@ class Login extends Component {
                         </ValidatorForm>
                     </React.Fragment>
                 }
-                <Link to="/ostoslista"><Button color="primary" variant="contained">Ohita Login</Button></Link>
+                
 
             </React.Fragment>
         )
