@@ -6,14 +6,14 @@ class ShoppingListFooter extends Component {
   render() {
     return (
       <React.Fragment>
-          <div style={{width: '100vw', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><button onClick={this.props.addToPantry}>Lisää ostoslistan tavarat ruokakomeroon</button></div>
+        <div style={{ width: '100vw', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><button onClick={this.props.addToPantry}>Lisää ostoslistan tavarat ruokakomeroon</button></div>
       </React.Fragment>
     )
   }
 }
 
 ShoppingListFooter.propTypes = {
-    addToPantry: PropTypes.func.isRequired
+  addToPantry: PropTypes.func.isRequired
 }
 
 export default ShoppingListFooter

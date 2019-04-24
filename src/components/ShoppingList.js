@@ -8,10 +8,10 @@ class ShoppingList extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{width: '90%'}}>
-                <AddItem addItem={this.props.addItem} testi={this.props.stateItemsForShoppingList}/>
-                <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
-                <ShoppingListFooter addToPantry={this.props.addToPantry}/>
+                <div style={{ width: '90%' }}>
+                    <AddItem addItem={this.props.addItem} testi={this.props.stateItemsForShoppingList} />
+                    <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+                    <ShoppingListFooter addToPantry={this.props.addToPantry} />
                 </div>
             </React.Fragment>
         )

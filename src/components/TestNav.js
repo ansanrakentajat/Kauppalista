@@ -16,8 +16,6 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/reseptit"><div><Button><Avatar><LocalDining /></Avatar></Button></div></Link>
                         <Button onClick={this.props.fetchFromDescription}>Fetch state from description</Button>
                         <Link style={{ flex: '1' }} to="/asetukset"><div><Button><Avatar><Settings /></Avatar></Button></div></Link>
-                        
-                        
                     </div>
                     <div style={{ display: 'none' }}>
                         <h1>Kauppalista</h1>
@@ -40,7 +38,6 @@ const testNavStyle = {
     padding: '10px',
     width: '100%',
     height: '10vh'
-
 };
 
 const linkStyle = {

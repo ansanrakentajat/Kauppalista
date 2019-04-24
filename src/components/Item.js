@@ -14,8 +14,6 @@ class Item extends Component {
     }
   }
 
-  
-
   render() {
     return (
       <React.Fragment>
