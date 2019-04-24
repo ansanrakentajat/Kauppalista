@@ -33,9 +33,9 @@ const getUser = (token) => {
 
 const getFilesByTag = (tag) => {
     return fetch(apiUrl + 'tags/' + tag).then(response => {
-      return response.json();
+        return response.json();
     });
-  };
+};
 
 
 export { login, checkUser, getUser, getFilesByTag };

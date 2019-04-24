@@ -4,19 +4,26 @@ import { Button } from '@material-ui/core';
 
 class Settings extends Component {
 
-   
-
     logout = (evt) => {
         localStorage.removeItem('token2');
         this.props.setUserLogout(null);
         this.props.history.push('/');
     }
 
+    componentDidMount() {
+        if (this.props.stateForLoggedIn.user === null) {
+            console.log('ET OLE KIRJAUTUNUT! SINUT SIIRRETÄÄN LOGIN-SIVULLE.');
+            this.props.history.push('/');
+        } else {
+            console.log('AI OLITKIN JO KIRJAUTUNUT.');
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
                 <h1>moi tere</h1>
-                <Button onClick={() => {this.logout()}}>LOGOUT</Button>
+                <Button onClick={() => { this.logout() }}>LOGOUT</Button>
             </React.Fragment>
         )
     }
@@ -25,7 +32,7 @@ class Settings extends Component {
 Settings.propTypes = {
     setUserLogout: PropTypes.func,
     history: PropTypes.object,
-  };
-
+    stateForLoggedIn: PropTypes.object
+};
 
 export default Settings

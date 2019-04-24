@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { Send } from '@material-ui/icons';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { login, checkUser, getUser} from '../util/MediaAPI';
+import { login, checkUser, getUser } from '../util/MediaAPI';
 
 class Login extends Component {
     state = {
@@ -31,7 +30,7 @@ class Login extends Component {
 
     doLogin = () => {
         login(this.state.user.username, this.state.user.password).then(response => {
-            console.log(response, 'moi moi moi');
+            //console.log(response);
             if (response.user !== undefined) {
                 this.props.setUser(response.user);
                 localStorage.setItem('token2', response.token);
@@ -50,7 +49,7 @@ class Login extends Component {
         const value = target.value;
         const name = target.name;
 
-        console.log(value, name);
+        //console.log(value, name);
 
         this.setState((prevState) => ({
             user: {
@@ -74,19 +73,19 @@ class Login extends Component {
     componentDidMount() {
         console.log(localStorage.getItem('token2'));
         if (localStorage.getItem('token2') !== null) {
-          getUser(localStorage.getItem('token2')).then(response => {
-            this.props.setUser(response);
-            this.props.history.push('/ostoslista');
-          });
+            getUser(localStorage.getItem('token2')).then(response => {
+                this.props.setUser(response);
+                this.props.history.push('/ostoslista');
+            });
         }
         // custom rule will have name 'isPasswordMatch'
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-          return value === this.state.user.password;
+            return value === this.state.user.password;
         });
         ValidatorForm.addValidationRule('isUserAvailable', () => {
-          return this.state.validUser;
+            return this.state.validUser;
         });
-      }
+    }
 
     render() {
         return (
@@ -172,7 +171,7 @@ class Login extends Component {
                         </ValidatorForm>
                     </React.Fragment>
                 }
-                <Link to="/ostoslista"><Button color="primary" variant="contained">Ohita Login</Button></Link>
+                
 
             </React.Fragment>
         )
