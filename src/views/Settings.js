@@ -25,7 +25,7 @@ class Settings extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>moi tere</h1>
+                <h1>Kiitos ja tervetuloa uudestaan.</h1>
                 <Button onClick={() => { this.logout() }}>LOGOUT</Button>
             </React.Fragment>
         )

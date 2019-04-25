@@ -29,18 +29,19 @@ class Login extends Component {
     };
 
     doLogin = () => {
+
         login(this.state.user.username, this.state.user.password).then(response => {
             //console.log(response);
             if (response.user !== undefined) {
                 this.props.setUser(response.user);
                 localStorage.setItem('token2', response.token);
-                //%%%%%%%%%% TÄSSÄ VÄLISSÄ HAETAAN BACKISTÄ KÄYTTÄJÄN PROFIILIKUVAN DESCRIPTION %%%%%%%%%%%%%%%
-                
-                //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 this.props.history.push('/ostoslista');
             } else {
                 this.setState({ message: response.message });
             }
+        }).then(() => {
+            console.log('koska päästään tänne', this.props.state);
+            
         }).catch((err) => {
             console.log(err);
         });
@@ -174,7 +175,7 @@ class Login extends Component {
                         </ValidatorForm>
                     </React.Fragment>
                 }
-                
+
 
             </React.Fragment>
         )
@@ -183,7 +184,9 @@ class Login extends Component {
 
 Login.propTypes = {
     setUser: PropTypes.func,
-    history: PropTypes.object
+    history: PropTypes.object,
+    fetchFromDescription: PropTypes.func,
+    state: PropTypes.object
 };
 
 export default Login
