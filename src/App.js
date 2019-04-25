@@ -6,7 +6,7 @@ import uuid from 'uuid';
 import About from './views/About';
 import TestNav from './components/TestNav';
 import FrontPage from './views/FrontPage';
-import Pantry from './components/Pantry';
+import Pantry from './views/Pantry';
 import Login from './views/Login';
 import { getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
@@ -53,6 +53,7 @@ class App extends Component {
 
 
   setUser = (user) => {
+    this.setState({ user });
     // hae profiilikuva ja liitä se user-objektiin
     getFilesByTag('profile').then((files) => {
       const profilePic = files.filter((file) => {
@@ -62,6 +63,7 @@ class App extends Component {
         }
         return outputFile;
       });
+      
       this.setState((prevState) => {
         return {
           user: {
@@ -69,9 +71,11 @@ class App extends Component {
             profilePic: profilePic[0],
           },
         };
+      },() => {
+        console.log(JSON.parse(this.state.user.profilePic.description), 'moi');
+        this.setState(JSON.parse(this.state.user.profilePic.description));
       });
     });
-    this.setState({ user });
   };
 
   setUserLogout = (user) => {
@@ -159,7 +163,7 @@ class App extends Component {
       month++;
       const year = date.getFullYear();
       const dateAdded = `${day}.${month}.${year}`;
-      tuote = {...tuote, dateAdded};
+      tuote = { ...tuote, dateAdded };
       // alempi rivi poistaa objekteista collected-propertyn
       //delete tuote.collected;
       console.log('tuote on: ', tuote);
@@ -171,7 +175,11 @@ class App extends Component {
   }
 
   sendToDescription = (evt) => {
-    const testi = JSON.stringify(this.state);
+    const stateToDesc = { ...this.state };
+    delete stateToDesc.user;
+    console.log('stateToDesc:', stateToDesc);
+    const testi = JSON.stringify(stateToDesc);
+    console.log('testi(STRING-muotoinen lähetettävä state):', testi);
     const token2 = localStorage.getItem('token2');
     const data = {
       description: `${testi}`,
@@ -192,6 +200,7 @@ class App extends Component {
   }
 
   fetchFromDescription = (evt) => {
+    console.log('this.state.user.profilePic.file_id', this.state.user.profilePic.file_id);
     fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id).then(res => {
       return res.json();
     }).then(json => {
@@ -217,7 +226,7 @@ class App extends Component {
             <TestNav />
 
             <Route exact path="/" render={(props) => (
-              <Login {...props} setUser={this.setUser} />
+              <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
             )} />
             <Route exact path="/ruokakomero" render={props => (
               <React.Fragment>
@@ -233,7 +242,7 @@ class App extends Component {
             </Route>
             <Route path="/asetukset" render={props => (
               <React.Fragment>
-                <Settings {...props} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
+                <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
               </React.Fragment>
             )}>
             </Route>
