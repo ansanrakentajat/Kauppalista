@@ -5,6 +5,9 @@ import { Button } from '@material-ui/core';
 class Settings extends Component {
 
     logout = (evt) => {
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        this.props.sendToDescription();
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         localStorage.removeItem('token2');
         this.props.setUserLogout(null);
         this.props.history.push('/');
@@ -32,7 +35,8 @@ class Settings extends Component {
 Settings.propTypes = {
     setUserLogout: PropTypes.func,
     history: PropTypes.object,
-    stateForLoggedIn: PropTypes.object
+    stateForLoggedIn: PropTypes.object,
+    sendToDescription: PropTypes.func
 };
 
 export default Settings

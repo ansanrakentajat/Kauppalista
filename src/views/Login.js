@@ -34,6 +34,9 @@ class Login extends Component {
             if (response.user !== undefined) {
                 this.props.setUser(response.user);
                 localStorage.setItem('token2', response.token);
+                //%%%%%%%%%% TÄSSÄ VÄLISSÄ HAETAAN BACKISTÄ KÄYTTÄJÄN PROFIILIKUVAN DESCRIPTION %%%%%%%%%%%%%%%
+                
+                //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 this.props.history.push('/ostoslista');
             } else {
                 this.setState({ message: response.message });

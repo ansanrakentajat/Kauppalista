@@ -171,7 +171,11 @@ class App extends Component {
   }
 
   sendToDescription = (evt) => {
-    const testi = JSON.stringify(this.state);
+    const stateToDesc = {...this.state};
+    delete stateToDesc.user;
+    console.log('stateToDesc:', stateToDesc);
+    const testi = JSON.stringify(stateToDesc);
+    console.log('testi(STRING-muotoinen lähetettävä state):', testi);
     const token2 = localStorage.getItem('token2');
     const data = {
       description: `${testi}`,
@@ -233,7 +237,7 @@ class App extends Component {
             </Route>
             <Route path="/asetukset" render={props => (
               <React.Fragment>
-                <Settings {...props} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
+                <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
               </React.Fragment>
             )}>
             </Route>
