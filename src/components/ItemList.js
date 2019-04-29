@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Item from './Item';
 import PropTypes from 'prop-types';
+import { Paper, Table } from '@material-ui/core';
 
 class ItemList extends Component {
 
@@ -9,29 +10,33 @@ class ItemList extends Component {
       <React.Fragment>
         <div style={{ width: '90%', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
 
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>OSTOSLISTA</h3>
-            {this.props.stateItemsForItemList.map(item => {
-              let moi;
-              if (!item.collected) {
-                moi = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+            <Table>
+              {this.props.stateItemsForItemList.map(item => {
+                let notCollected;
+                if (!item.collected) {
+                  notCollected = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />;
+                }
+                return notCollected;
               }
-              return moi;
-            }
-            )}
-          </div>
+              )}
+            </Table>
+          </Paper>
 
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>KERÄTYT</h3>
-            {this.props.stateItemsForItemList.map(item => {
-              let tere;
-              if (item.collected) {
-                tere = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+            <Table>
+              {this.props.stateItemsForItemList.map(item => {
+                let collected;
+                if (item.collected) {
+                  collected = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
+                }
+                return collected;
               }
-              return tere;
-            }
-            )}
-          </div>
+              )}
+            </Table>
+          </Paper>
 
         </div>
       </React.Fragment>

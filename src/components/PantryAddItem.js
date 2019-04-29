@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input, MenuItem, Select, Button } from '@material-ui/core';
+import { Input, Select, MenuItem, Button} from '@material-ui/core';
 
-class AddItem extends Component {
+class PantryAddItem extends Component {
 
     state = {
         title: '',
@@ -18,12 +18,13 @@ class AddItem extends Component {
         console.log('alkukirjain :', alkukirjain);
         console.log('muutKirjaimet :', muutKirjaimet);
         console.log('isollaAlkukirjaimella :', isollaAlkukirjaimella);
-        this.props.addItem(isollaAlkukirjaimella, this.state.amount, this.state.unit);
+        console.log(isollaAlkukirjaimella, this.state.amount, this.state.unit);
+        
+        this.props.addPantryItem(isollaAlkukirjaimella, this.state.amount, this.state.unit);
         this.setState({ title: '', amount: '', unit: '' });
     }
 
     handleOnChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
 
     render() {
         return (
@@ -48,26 +49,8 @@ class AddItem extends Component {
     }
 }
 
-AddItem.propTypes = {
-    addItem: PropTypes.func.isRequired
+PantryAddItem.propTypes = {
+    addPantryItem: PropTypes.func
 }
 
-
-    // < form style = {{ width: '90%', margin: 'auto', display: 'flex', flexWrap: 'wrap' }} onSubmit = { this.handleOnSubmit } >
-    //     <input type="text" name="title" placeholder="Item title" style={{ flex: '1' }} value={this.state.title} onChange={this.handleOnChange} />
-    //     <input type="number" name="amount" placeholder="Amount" style={{ flex: '1' }} value={this.state.amount} onChange={this.handleOnChange} />
-    //     <select name="unit" onChange={this.handleOnChange} style={{ flex: '1' }} placeholder={this.state.unit}>
-    //         <option value="l">Litra</option>
-    //         <option value="dl">Desilitra</option>
-    //         <option value="ml">Millilitra</option>
-    //         <option value="kg">Kilogramma</option>
-    //         <option value="g">Gramma</option>
-    //         <option value="kpl">Kappale</option>
-    //         <option value="pss">Pussi</option>
-    //         <option value="pkt">Paketti</option>
-    //     </select>
-    //     <input type="submit" value="Submit" className="btn" style={{ flex: '1', padding: '5px' }} />
-    //             </form >
-
-
-export default AddItem
+export default PantryAddItem

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TableRow, TableCell, Checkbox, IconButton, Tooltip, Avatar } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 
 class Item extends Component {
 
@@ -17,13 +19,20 @@ class Item extends Component {
   render() {
     return (
       <React.Fragment>
-        <div style={this.getStyle()}>
-          <input type='checkbox' checked={this.props.itemForItem.collected} style={inputStyle} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)}></input>
-          <p style={pStyle}>{this.props.itemForItem.amount}</p>
-          <p style={pStyle}>{this.props.itemForItem.unit}</p>
-          <p style={pStyle}>{this.props.itemForItem.title}</p>
-          <button style={buttonStyle} onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}>X</button>
-        </div>
+        <TableRow>
+          <TableCell><Checkbox checked={this.props.itemForItem.collected} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)} /></TableCell>
+          <TableCell>{this.props.itemForItem.amount} {this.props.itemForItem.unit}</TableCell>
+          <TableCell>{this.props.itemForItem.title}</TableCell>
+          <TableCell>
+            <IconButton onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}>
+              <Tooltip title="Delete">
+                <Avatar>
+                  <Delete />
+                </Avatar>
+              </Tooltip>
+            </IconButton>
+          </TableCell>
+        </TableRow>
       </React.Fragment>
     )
   }
@@ -35,10 +44,22 @@ Item.propTypes = {
   deleteItem: PropTypes.func.isRequired
 }
 
-const inputStyle = {
-  width: '20%',
-  height: '50px'
+
+/* <div style={this.getStyle()}>
+        <input type='checkbox' checked={this.props.itemForItem.collected} style={inputStyle} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)}></input>
+        <p style={pStyle}>{this.props.itemForItem.amount}</p>
+        <p style={pStyle}>{this.props.itemForItem.unit}</p>
+        <p style={pStyle}>{this.props.itemForItem.title}</p>
+        <Fab ><Clear/></Fab>
+      </div> 
+      
+      const inputStyle = {
+width: '20%',
+height: '50px'
 };
+      
+// <Button><Fab><Clear/></Fab></Button>
+//<button  onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}><Fab style={buttonStyle}><Clear/></Fab></button>
 
 const pStyle = {
   width: '40%'
@@ -52,5 +73,6 @@ const buttonStyle = {
   borderRadius: '50%',
   cursor: 'pointer'
 };
+*/
 
 export default Item
