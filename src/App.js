@@ -63,7 +63,7 @@ class App extends Component {
         }
         return outputFile;
       });
-      
+
       this.setState((prevState) => {
         return {
           user: {
@@ -71,7 +71,7 @@ class App extends Component {
             profilePic: profilePic[0],
           },
         };
-      },() => {
+      }, () => {
         console.log(JSON.parse(this.state.user.profilePic.description), 'moi');
         this.setState(JSON.parse(this.state.user.profilePic.description));
       });
@@ -217,6 +217,42 @@ class App extends Component {
     }
   }
 
+  deletePantryItem = (id) => {
+    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] });
+  }
+
+  changePantryTitle = (newTitle, id) => {
+    this.setState({
+      pantry: this.state.pantry.map(item => {
+        if (item.id === id) {
+          item.title = newTitle;
+        }
+        return item;
+      })
+    });
+  }
+
+  addPantryItem = (title, amount, unit) => {
+    const date = new Date();
+    const day = date.getDate();
+    let month = date.getMonth();
+    month++;
+    const year = date.getFullYear();
+    const dateAdded = `${day}.${month}.${year}`;
+
+    const newItem = {
+      id: uuid.v4(),
+      title: title,
+      amount: amount,
+      unit: unit,
+      dateAdded: dateAdded
+    };
+    this.setState({ pantry: [...this.state.pantry, newItem] }, () => {
+      console.log('Here is the whole state after adding pantry item', this.state);
+      localStorage.setItem('munOstoslista', JSON.stringify(this.state));
+    });
+  }
+
 
   render() {
     return (
@@ -230,7 +266,7 @@ class App extends Component {
             )} />
             <Route exact path="/ruokakomero" render={props => (
               <React.Fragment>
-                <Pantry {...props} stateToPantry={this.state} />
+                <Pantry {...props} addPantryItem={this.addPantryItem} changePantryTitle={this.changePantryTitle} stateToPantry={this.state} deletePantryItem={this.deletePantryItem} />
               </React.Fragment>
             )}>
             </Route>
