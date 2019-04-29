@@ -8,6 +8,8 @@ import TestNav from './components/TestNav';
 import FrontPage from './views/FrontPage';
 import Pantry from './views/Pantry';
 import Login from './views/Login';
+import Recipes from './views/Recipes';
+import OneRecipe from './views/OneRecipe';
 import { getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
@@ -238,6 +240,18 @@ class App extends Component {
               <React.Fragment>
                 <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/reseptit" render={props => (
+                <React.Fragment>
+                  <Recipes />
+                </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/resepti" render={props => (
+                <React.Fragment>
+                  <OneRecipe />
+                </React.Fragment>
             )}>
             </Route>
             <Route path="/asetukset" render={props => (
