@@ -22,8 +22,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/ruokakomero">
                             <div>
                                 <Button onClick={() => { this.setActive('ruokakomero') }}>
-                                    <Avatar>
-                                        <Kitchen color={this.state.active === 'ruokakomero' ? 'primary' : 'disabled'} />
+                                    <Avatar style={{backgroundColor: this.state.active === 'ruokakomero' ? 'blue' : ''}}>
+                                        <Kitchen/>
                                     </Avatar>
                                 </Button>
                             </div>
@@ -31,8 +31,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/ostoslista">
                             <div>
                                 <Button onClick={() => { this.setActive('ostoslista') }}>
-                                    <Avatar>
-                                        <Receipt color={this.state.active === 'ostoslista' ? 'primary' : 'disabled'} />
+                                    <Avatar style={{backgroundColor: this.state.active === 'ostoslista' ? 'blue' : ''}}>
+                                        <Receipt/>
                                     </Avatar>
                                 </Button>
                             </div>
@@ -40,8 +40,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/reseptit">
                             <div>
                                 <Button onClick={() => { this.setActive('reseptit') }}>
-                                    <Avatar>
-                                        <LocalDining color={this.state.active === 'reseptit' ? 'primary' : 'disabled'} />
+                                    <Avatar style={{backgroundColor: this.state.active === 'reseptit' ? 'blue' : ''}}>
+                                        <LocalDining/>
                                     </Avatar>
                                 </Button>
                             </div>
@@ -49,8 +49,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/asetukset">
                             <div>
                                 <Button onClick={() => { this.setActive('asetukset') }}>
-                                    <Avatar>
-                                        <Settings color={this.state.active === 'asetukset' ? 'primary' : 'disabled'} />
+                                    <Avatar style={{backgroundColor: this.state.active === 'asetukset' ? 'blue' : ''}}>
+                                        <Settings/>
                                     </Avatar>
                                 </Button>
                             </div>
@@ -62,6 +62,12 @@ class TestNav extends Component {
     }
 }
 
+
+/* <Button onClick={() => { this.setActive('ostoslista') }}>
+                                    <Avatar>
+                                        <Receipt color={this.state.active === 'ostoslista' ? 'primary' : 'disabled'} />
+                                    </Avatar>
+                                </Button> */
 
 const testNavStyle = {
     background: '#333',
