@@ -5,6 +5,15 @@ import { Kitchen, Receipt, LocalDining, Settings } from '@material-ui/icons';
 
 
 class TestNav extends Component {
+    state = {
+        active: 'ostoslista'
+    }
+
+    setActive = (selected) => {
+        this.setState({ active: selected })
+    }
+
+
     render() {
         return (
             <React.Fragment>
@@ -12,36 +21,36 @@ class TestNav extends Component {
                     <div style={{ display: 'flex' }}>
                         <Link style={{ flex: '1' }} to="/ruokakomero">
                             <div>
-                                <Button>
+                                <Button onClick={() => { this.setActive('ruokakomero') }}>
                                     <Avatar>
-                                        <Kitchen />
+                                        <Kitchen color={this.state.active === 'ruokakomero' ? 'primary' : 'disabled'} />
                                     </Avatar>
                                 </Button>
                             </div>
                         </Link>
                         <Link style={{ flex: '1' }} to="/ostoslista">
                             <div>
-                                <Button>
+                                <Button onClick={() => { this.setActive('ostoslista') }}>
                                     <Avatar>
-                                        <Receipt />
+                                        <Receipt color={this.state.active === 'ostoslista' ? 'primary' : 'disabled'} />
                                     </Avatar>
                                 </Button>
                             </div>
                         </Link>
                         <Link style={{ flex: '1' }} to="/reseptit">
                             <div>
-                                <Button>
+                                <Button onClick={() => { this.setActive('reseptit') }}>
                                     <Avatar>
-                                        <LocalDining />
+                                        <LocalDining color={this.state.active === 'reseptit' ? 'primary' : 'disabled'} />
                                     </Avatar>
                                 </Button>
                             </div>
                         </Link>
                         <Link style={{ flex: '1' }} to="/asetukset">
                             <div>
-                                <Button>
+                                <Button onClick={() => { this.setActive('asetukset') }}>
                                     <Avatar>
-                                        <Settings />
+                                        <Settings color={this.state.active === 'asetukset' ? 'primary' : 'disabled'} />
                                     </Avatar>
                                 </Button>
                             </div>

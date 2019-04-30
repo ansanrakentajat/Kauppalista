@@ -21,8 +21,8 @@ class Item extends Component {
       <React.Fragment>
         <TableRow>
           <TableCell><Checkbox checked={this.props.itemForItem.collected} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)} /></TableCell>
-          <TableCell>{this.props.itemForItem.amount} {this.props.itemForItem.unit}</TableCell>
           <TableCell>{this.props.itemForItem.title}</TableCell>
+          <TableCell>{this.props.itemForItem.amount} {this.props.itemForItem.unit}</TableCell>
           <TableCell>
             <IconButton onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}>
               <Tooltip title="Delete">

@@ -254,6 +254,9 @@ class App extends Component {
   }
 
 
+  
+
+
   render() {
     return (
       <Router>
@@ -264,13 +267,13 @@ class App extends Component {
             <Route exact path="/" render={(props) => (
               <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
             )} />
-            <Route exact path="/ruokakomero" render={props => (
+            <Route path="/ruokakomero" render={props => (
               <React.Fragment>
                 <Pantry {...props} addPantryItem={this.addPantryItem} changePantryTitle={this.changePantryTitle} stateToPantry={this.state} deletePantryItem={this.deletePantryItem} />
               </React.Fragment>
             )}>
             </Route>
-            <Route exact path="/ostoslista" render={props => (
+            <Route path="/ostoslista" render={props => (
               <React.Fragment>
                 <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
               </React.Fragment>
