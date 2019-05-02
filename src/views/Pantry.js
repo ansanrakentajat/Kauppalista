@@ -21,16 +21,16 @@ class Pantry extends Component {
         <div style={divStyle}>
           <PantryAddItem addPantryItem={this.props.addPantryItem} />
           <PantryItemList changePantryTitle={this.props.changePantryTitle} stateToPantry={this.props.stateToPantry} deletePantryItem={this.props.deletePantryItem} />
-          <PantryFooter />
         </div>
+        <PantryFooter />
       </React.Fragment>
     )
   }
 }
 
 const divStyle = {
-  maxWidth: '100vw',
-  minHeight: '80vh',
+  
+  height: '80vh',
   overflow: 'auto',
   display: 'flex',
   flexDirection: 'column'

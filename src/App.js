@@ -20,6 +20,48 @@ class App extends Component {
         amount: '1.5',
         unit: 'l',
         collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Maito',
+        amount: '1.5',
+        unit: 'l',
+        collected: false
       }
     ],
     shoppingList: {
@@ -88,11 +130,11 @@ class App extends Component {
   // Tällä metodilla luodaan muotoiltu kutsumishetken päivämäärä. 
   thisDate = () => {
     const todayDate = new Date();
-      const day = todayDate.getDate();
-      let month = todayDate.getMonth();
-      month++;
-      const year = todayDate.getFullYear();
-      return `${day}.${month}.${year}`;
+    const day = todayDate.getDate();
+    let month = todayDate.getMonth();
+    month++;
+    const year = todayDate.getFullYear();
+    return `${day}.${month}.${year}`;
   }
 
   // Tällä metodilla muutetaan statessa ShoppingList itemin collected-arvo päinvastaiseksi.
@@ -260,38 +302,42 @@ class App extends Component {
   }
 
 
+  //---------------------------------------------------------------------------------------------------------------
+
 
   render() {
     return (
       <Router>
         <div className="App">
-            <NavigationBar />
+          <NavigationBar />
 
-            <Route exact path="/" render={(props) => (
-              <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
-            )} />
-            <Route path="/ruokakomero" render={props => (
-              <React.Fragment>
-                <Pantry {...props} addPantryItem={this.addPantryItem} changePantryTitle={this.changePantryTitle} stateToPantry={this.state} deletePantryItem={this.deletePantryItem} />
-              </React.Fragment>
-            )}>
-            </Route>
-            <Route path="/ostoslista" render={props => (
-              <React.Fragment>
-                <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
-              </React.Fragment>
-            )}>
-            </Route>
-            <Route path="/asetukset" render={props => (
-              <React.Fragment>
-                <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
-              </React.Fragment>
-            )}>
-            </Route>
+          <Route exact path="/" render={(props) => (
+            <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
+          )} />
+          <Route path="/ruokakomero" render={props => (
+            <React.Fragment>
+              <Pantry {...props} addPantryItem={this.addPantryItem} changePantryTitle={this.changePantryTitle} stateToPantry={this.state} deletePantryItem={this.deletePantryItem} />
+            </React.Fragment>
+          )}>
+          </Route>
+          <Route path="/ostoslista" render={props => (
+            <React.Fragment>
+              <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+            </React.Fragment>
+          )}>
+          </Route>
+          <Route path="/asetukset" render={props => (
+            <React.Fragment>
+              <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
+            </React.Fragment>
+          )}>
+          </Route>
         </div>
       </Router>
     );
   }
 }
+
+
 
 export default App;

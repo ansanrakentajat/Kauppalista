@@ -8,7 +8,7 @@ class PantryItemList extends Component {
     render() {
         return (
             <React.Fragment>
-                <Paper>
+                <Paper style={{width: '90%', margin: 'auto'}}>
                     <Table>
                         <TableBody>
                             {this.props.stateToPantry.pantry.map(element => (

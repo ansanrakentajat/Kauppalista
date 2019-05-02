@@ -26,9 +26,10 @@ class ItemList extends Component {
             </Table>
           </Paper>
 
-          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '300px' }}>
+          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px' }}>
             <h3>KERÄTYT</h3>
             <Table>
+            <TableBody>
               {this.props.stateItemsForItemList.map(item => {
                 let collected;
                 if (item.collected) {
@@ -37,6 +38,7 @@ class ItemList extends Component {
                 return collected;
               }
               )}
+              </TableBody>
             </Table>
           </Paper>
 
