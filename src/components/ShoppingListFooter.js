@@ -8,9 +8,7 @@ class ShoppingListFooter extends Component {
     return (
       <React.Fragment>
         <div style={footerStyle}>
-          <button onClick={this.props.addToPantry}>Lisää ostoslistan tavarat ruokakomeroon</button>
-          <Button style={buttonStyle} onClick={this.props.sendToDescription}>Save</Button>
-          <Button style={buttonStyle} onClick={this.props.fetchFromDescription}>Fetch state from description</Button>
+          <Button style={buttonStyle} onClick={this.props.addToPantry}>Lisää kerätyt ruokakomeroon</Button>
         </div>
       </React.Fragment>
     )

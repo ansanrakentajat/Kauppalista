@@ -20,6 +20,7 @@ class ShoppingList extends Component {
         return (
             <React.Fragment>
                 <div style={divStyle}>
+                    <h1>Ostoslista</h1>
                     <AddItem addItem={this.props.addItem} testi={this.props.stateItemsForShoppingList} />
                     <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
                 </div>

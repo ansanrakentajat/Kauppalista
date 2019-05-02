@@ -6,7 +6,6 @@ class PantryFooter extends Component {
         return (
             <React.Fragment>
                 <div style={footerStyle}>
-                    <h1>tämä on musta palkki</h1>
                 </div>
             </React.Fragment>
         )

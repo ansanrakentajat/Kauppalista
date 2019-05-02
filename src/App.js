@@ -20,48 +20,6 @@ class App extends Component {
         amount: '1.5',
         unit: 'l',
         collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
-      },
-      {
-        id: uuid.v4(),
-        title: 'Maito',
-        amount: '1.5',
-        unit: 'l',
-        collected: false
       }
     ],
     shoppingList: {
@@ -148,12 +106,14 @@ class App extends Component {
           return item;
         })
       }
-    });
+    }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla poistetaan tietty ShoppingList:n item statesta.
   deleteItem = (id) => {
-    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } });
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } }, () => {
+      this.sendToDescription();
+    });
   }
 
   // Tällä metodilla lisätään stateen ShoppingList:n itemi.
@@ -166,15 +126,20 @@ class App extends Component {
       collected: false
     };
     this.setState({ shoppingList: { items: [...this.state.shoppingList.items, newItem] } }, () => {
-      console.log('Here is the whole state after adding shopping list item', this.state);
+      //console.log('Here is the whole state after adding shopping list item', this.state);
       localStorage.setItem('munOstoslista', JSON.stringify(this.state));
+      this.sendToDescription();
     });
+
   }
 
   // Tällä metodilla lisäätään ostoslistan rivit ruokakomeroon ja tyhjennetään ostoslista.
   addToPantry = () => {
+    const collectedItems = [...this.state.shoppingList.items.filter(item => item.collected === true)];
+    //console.log(collectedItems, 'collected items');
+
     // luodaan uusi Set-objekti, joka sisältää kaikki uniikit ostoslistan titlet
-    const setOfUniqueTitles = new Set(this.state.shoppingList.items.map(item => item.title));
+    const setOfUniqueTitles = new Set(collectedItems.map(item => item.title));
     // tehdään array, johon laitetaan useampi array. Nämä arrayt sisältävät kaikki samannimiset ostoslistan rivit
     const arrayByTitle = [];
     // loopataan setOfUniqueTitles läpi ja kullakin kierroksella luodaan array, johon filteröity sen kierroksen samannimiset ostoslistan rivit
@@ -213,20 +178,20 @@ class App extends Component {
       tuote = { ...tuote, dateAdded };
       // alempi rivi poistaa objekteista collected-propertyn
       //delete tuote.collected;
-      console.log('tuote on: ', tuote);
+      //console.log('tuote on: ', tuote);
       this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
-    this.setState({ shoppingList: { items: [] } });
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => {this.sendToDescription()});
   }
 
   // Tällä metodilla lähetetään käyttäjän state backendiin käyttäjän profiilikuvan description-kenttään.
   sendToDescription = (evt) => {
     const stateToDesc = { ...this.state };
     delete stateToDesc.user;
-    console.log('Tämä on backendiin lähetettävä käyttäjän state', stateToDesc);
+    //console.log('Tämä on backendiin lähetettävä käyttäjän state', stateToDesc);
     const stateToDescString = JSON.stringify(stateToDesc);
-    console.log('Tämä on backendiin lähetettävä käyttäjän state muutettuna merkkijonoksi', stateToDescString);
+    //console.log('Tämä on backendiin lähetettävä käyttäjän state muutettuna merkkijonoksi', stateToDescString);
     const token2 = localStorage.getItem('token2');
     const data = {
       description: `${stateToDescString}`,
@@ -242,7 +207,7 @@ class App extends Component {
     fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id, settings).then(res => {
       return res.json();
     }).then(json => {
-      console.log(json);
+      //console.log(json);
     }).catch(err => console.log('Tämä error tuli sendToDescription:n aikana:', err));
   }
 
@@ -252,7 +217,7 @@ class App extends Component {
       return res.json();
     }).then(json => {
       // String-muotoinen state parsetetaan JS-objektiksi
-      console.log(JSON.parse(json.description));
+      //console.log(JSON.parse(json.description));
     }).catch(err => console.log('Tämä error tuli fetchFromDescription:n aikana:', err));
   }
 
@@ -268,7 +233,7 @@ class App extends Component {
 
   // Tällä metodilla poistetaan Pantry:n itemi statesta.
   deletePantryItem = (id) => {
-    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] });
+    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => {this.sendToDescription()});
   }
 
   // Tällä metodilla päivitetään muutettu Pantry:n itemin title stateen.
@@ -280,7 +245,7 @@ class App extends Component {
         }
         return item;
       })
-    });
+    }, () => {this.sendToDescription()});
   }
 
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
@@ -296,8 +261,9 @@ class App extends Component {
       dateAdded: dateAdded
     };
     this.setState({ pantry: [...this.state.pantry, newItem] }, () => {
-      console.log('Here is the whole state after adding pantry item', this.state);
+      //console.log('Here is the whole state after adding pantry item', this.state);
       localStorage.setItem('munOstoslista', JSON.stringify(this.state));
+      this.sendToDescription();
     });
   }
 

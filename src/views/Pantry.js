@@ -19,6 +19,7 @@ class Pantry extends Component {
     return (
       <React.Fragment>
         <div style={divStyle}>
+        <h1>Ruokakomero</h1>
           <PantryAddItem addPantryItem={this.props.addPantryItem} />
           <PantryItemList changePantryTitle={this.props.changePantryTitle} stateToPantry={this.props.stateToPantry} deletePantryItem={this.props.deletePantryItem} />
         </div>
