@@ -1,7 +1,4 @@
 body {
-  margin: 0;
-  padding: 0;
   width: 100vw;
-  max-height: 100vh;
-  overflow: auto;
+  height: 100vh;
 }

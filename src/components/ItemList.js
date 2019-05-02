@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Item from './Item';
 import PropTypes from 'prop-types';
-import { Paper, Table } from '@material-ui/core';
+import { Paper, Table, TableBody } from '@material-ui/core';
 
 class ItemList extends Component {
 
@@ -13,20 +13,23 @@ class ItemList extends Component {
           <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>OSTOSLISTA</h3>
             <Table>
-              {this.props.stateItemsForItemList.map(item => {
-                let notCollected;
-                if (!item.collected) {
-                  notCollected = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />;
+              <TableBody>
+                {this.props.stateItemsForItemList.map(item => {
+                  let notCollected;
+                  if (!item.collected) {
+                    notCollected = <Item key={item.id} itemForItem={item} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />;
+                  }
+                  return notCollected;
                 }
-                return notCollected;
-              }
-              )}
+                )}
+              </TableBody>
             </Table>
           </Paper>
 
-          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px' }}>
             <h3>KERÄTYT</h3>
             <Table>
+            <TableBody>
               {this.props.stateItemsForItemList.map(item => {
                 let collected;
                 if (item.collected) {
@@ -35,6 +38,7 @@ class ItemList extends Component {
                 return collected;
               }
               )}
+              </TableBody>
             </Table>
           </Paper>
 
