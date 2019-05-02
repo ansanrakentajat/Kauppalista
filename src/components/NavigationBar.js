@@ -4,7 +4,7 @@ import { Avatar, Button } from '@material-ui/core';
 import { Kitchen, Receipt, LocalDining, Settings } from '@material-ui/icons';
 
 
-class TestNav extends Component {
+class NavigationBar extends Component {
     state = {
         active: 'ostoslista'
     }
@@ -18,12 +18,11 @@ class TestNav extends Component {
         return (
             <React.Fragment>
                 <nav style={testNavStyle}>
-                    <div style={{ display: 'flex' }}>
                         <Link style={{ flex: '1' }} to="/ruokakomero">
                             <div>
                                 <Button onClick={() => { this.setActive('ruokakomero') }}>
-                                    <Avatar style={{backgroundColor: this.state.active === 'ruokakomero' ? 'blue' : ''}}>
-                                        <Kitchen/>
+                                    <Avatar style={{ backgroundColor: this.state.active === 'ruokakomero' ? 'green' : '' }}>
+                                        <Kitchen />
                                     </Avatar>
                                 </Button>
                             </div>
@@ -31,8 +30,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/ostoslista">
                             <div>
                                 <Button onClick={() => { this.setActive('ostoslista') }}>
-                                    <Avatar style={{backgroundColor: this.state.active === 'ostoslista' ? 'blue' : ''}}>
-                                        <Receipt/>
+                                    <Avatar style={{ backgroundColor: this.state.active === 'ostoslista' ? 'green' : '' }}>
+                                        <Receipt />
                                     </Avatar>
                                 </Button>
                             </div>
@@ -40,8 +39,8 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/reseptit">
                             <div>
                                 <Button onClick={() => { this.setActive('reseptit') }}>
-                                    <Avatar style={{backgroundColor: this.state.active === 'reseptit' ? 'blue' : ''}}>
-                                        <LocalDining/>
+                                    <Avatar style={{ backgroundColor: this.state.active === 'reseptit' ? 'green' : '' }}>
+                                        <LocalDining />
                                     </Avatar>
                                 </Button>
                             </div>
@@ -49,13 +48,12 @@ class TestNav extends Component {
                         <Link style={{ flex: '1' }} to="/asetukset">
                             <div>
                                 <Button onClick={() => { this.setActive('asetukset') }}>
-                                    <Avatar style={{backgroundColor: this.state.active === 'asetukset' ? 'blue' : ''}}>
-                                        <Settings/>
+                                    <Avatar style={{ backgroundColor: this.state.active === 'asetukset' ? 'green' : '' }}>
+                                        <Settings />
                                     </Avatar>
                                 </Button>
                             </div>
                         </Link>
-                    </div>
                 </nav>
             </React.Fragment>
         )
@@ -63,19 +61,23 @@ class TestNav extends Component {
 }
 
 
-/* <Button onClick={() => { this.setActive('ostoslista') }}>
-                                    <Avatar>
-                                        <Receipt color={this.state.active === 'ostoslista' ? 'primary' : 'disabled'} />
-                                    </Avatar>
-                                </Button> */
+// TÄMÄ ALLA OLEVA ON VAIHTOEHTOINEN
+/* 
+<Button onClick={() => { this.setActive('ostoslista') }}>
+    <Avatar>
+        <Receipt color={this.state.active === 'ostoslista' ? 'primary' : 'disabled'} />
+    </Avatar>
+</Button>
+*/
 
 const testNavStyle = {
     background: '#333',
     color: '#fff',
     textAlign: 'center',
-    width: '100%',
-    height: '10vh'
+    width: '100vw',
+    height: '10vh',
+    display: 'flex'
 };
 
 
-export default TestNav;
+export default NavigationBar;

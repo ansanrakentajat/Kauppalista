@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import ShoppingList from './components/ShoppingList';
 import uuid from 'uuid';
-import About from './views/About';
-import TestNav from './components/TestNav';
-import FrontPage from './views/FrontPage';
+import NavigationBar from './components/NavigationBar';
 import Pantry from './views/Pantry';
 import Login from './views/Login';
 import { getFilesByTag } from './util/MediaAPI';
@@ -254,15 +252,14 @@ class App extends Component {
   }
 
 
-  
+
 
 
   render() {
     return (
       <Router>
         <div className="App">
-          <div className="container">
-            <TestNav />
+            <NavigationBar />
 
             <Route exact path="/" render={(props) => (
               <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
@@ -285,9 +282,6 @@ class App extends Component {
               </React.Fragment>
             )}>
             </Route>
-            <Route path="/about" component={About}></Route>
-            <Route path="/etusivu" component={FrontPage} />
-          </div>
         </div>
       </Router>
     );

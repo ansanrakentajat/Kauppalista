@@ -35,11 +35,7 @@ class ShoppingList extends Component {
 
 const divStyle = {
     height: '90vh',
-    position: 'relative',
-/*    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'space-evenly'*/
+    position: 'relative'
 };
 
 ShoppingList.propTypes = {
