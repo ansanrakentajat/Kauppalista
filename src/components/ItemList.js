@@ -10,8 +10,8 @@ class ItemList extends Component {
       <React.Fragment>
         <div style={{ width: '90%', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
 
-          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h3>OSTOSLISTA</h3>
+          <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
+            <h3>KERÄÄMÄTTÖMÄT</h3>
             <Table>
               <TableBody>
                 {this.props.stateItemsForItemList.map(item => {
