@@ -85,6 +85,17 @@ class App extends Component {
 
   // OMIA METODEJA ---------------------------------------------------------------------------------------------- 
 
+  // Tällä metodilla luodaan muotoiltu kutsumishetken päivämäärä. 
+  thisDate = () => {
+    const todayDate = new Date();
+      const day = todayDate.getDate();
+      let month = todayDate.getMonth();
+      month++;
+      const year = todayDate.getFullYear();
+      return `${day}.${month}.${year}`;
+  }
+
+  // Tällä metodilla muutetaan statessa ShoppingList itemin collected-arvo päinvastaiseksi.
   markComplete = (id) => {
     this.setState({
       shoppingList: {
@@ -98,10 +109,12 @@ class App extends Component {
     });
   }
 
+  // Tällä metodilla poistetaan tietty ShoppingList:n item statesta.
   deleteItem = (id) => {
     this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } });
   }
 
+  // Tällä metodilla lisätään stateen ShoppingList:n itemi.
   addItem = (title, amount, unit) => {
     const newItem = {
       id: uuid.v4(),
@@ -116,7 +129,7 @@ class App extends Component {
     });
   }
 
-  // tämä metodi lisää ostoslistan rivit ruokakomeroon ja tyhjentää ostoslistan
+  // Tällä metodilla lisäätään ostoslistan rivit ruokakomeroon ja tyhjennetään ostoslista.
   addToPantry = () => {
     // luodaan uusi Set-objekti, joka sisältää kaikki uniikit ostoslistan titlet
     const setOfUniqueTitles = new Set(this.state.shoppingList.items.map(item => item.title));
@@ -153,12 +166,8 @@ class App extends Component {
     });
     // loopataan productsToPantryArray läpi ja päivitetään kullakin kierroksella stateen uusi tuote.
     productsToPantryArray.forEach(tuote => {
-      const date = new Date();
-      const day = date.getDate();
-      let month = date.getMonth();
-      month++;
-      const year = date.getFullYear();
-      const dateAdded = `${day}.${month}.${year}`;
+      // Käytetään ylempänä määriteltyä metodia 'thisDate'.
+      const dateAdded = this.thisDate();
       tuote = { ...tuote, dateAdded };
       // alempi rivi poistaa objekteista collected-propertyn
       //delete tuote.collected;
@@ -169,6 +178,7 @@ class App extends Component {
     this.setState({ shoppingList: { items: [] } });
   }
 
+  // Tällä metodilla lähetetään käyttäjän state backendiin käyttäjän profiilikuvan description-kenttään.
   sendToDescription = (evt) => {
     const stateToDesc = { ...this.state };
     delete stateToDesc.user;
@@ -194,6 +204,7 @@ class App extends Component {
     }).catch(err => console.log('Tämä error tuli sendToDescription:n aikana:', err));
   }
 
+  // Tällä metodilla haetaan backendistä käyttäjän profiilikuvan description-kentästä tallennettu state ja se asetetaan staten arvoksi.
   fetchFromDescription = (evt) => {
     fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id).then(res => {
       return res.json();
@@ -213,10 +224,12 @@ class App extends Component {
     }
   }
 
+  // Tällä metodilla poistetaan Pantry:n itemi statesta.
   deletePantryItem = (id) => {
     this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] });
   }
 
+  // Tällä metodilla päivitetään muutettu Pantry:n itemin title stateen.
   changePantryTitle = (newTitle, id) => {
     this.setState({
       pantry: this.state.pantry.map(item => {
@@ -228,13 +241,10 @@ class App extends Component {
     });
   }
 
+  // Tällä metodilla lisätään Pantryn uusi itemi stateen.
   addPantryItem = (title, amount, unit) => {
-    const date = new Date();
-    const day = date.getDate();
-    let month = date.getMonth();
-    month++;
-    const year = date.getFullYear();
-    const dateAdded = `${day}.${month}.${year}`;
+    // Käytetään ylempänä määriteltyä metodia 'thisDate'.
+    const dateAdded = this.thisDate();
 
     const newItem = {
       id: uuid.v4(),
