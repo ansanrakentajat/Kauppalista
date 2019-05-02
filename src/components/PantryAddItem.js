@@ -14,12 +14,7 @@ class PantryAddItem extends Component {
         e.preventDefault();
         const alkukirjain = this.state.title[0].toUpperCase();
         const muutKirjaimet = this.state.title.slice(1);
-        const isollaAlkukirjaimella = alkukirjain + muutKirjaimet;
-        console.log('alkukirjain :', alkukirjain);
-        console.log('muutKirjaimet :', muutKirjaimet);
-        console.log('isollaAlkukirjaimella :', isollaAlkukirjaimella);
-        console.log(isollaAlkukirjaimella, this.state.amount, this.state.unit);
-        
+        const isollaAlkukirjaimella = alkukirjain + muutKirjaimet; 
         this.props.addPantryItem(isollaAlkukirjaimella, this.state.amount, this.state.unit);
         this.setState({ title: '', amount: '', unit: '' });
     }

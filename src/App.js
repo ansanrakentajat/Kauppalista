@@ -70,7 +70,6 @@ class App extends Component {
           },
         };
       }, () => {
-        console.log(JSON.parse(this.state.user.profilePic.description), 'moi');
         this.setState(JSON.parse(this.state.user.profilePic.description));
       });
     });
@@ -84,7 +83,7 @@ class App extends Component {
     return this.state.user !== null;
   };
 
-  // OMIA METODEJA  
+  // OMIA METODEJA ---------------------------------------------------------------------------------------------- 
 
   markComplete = (id) => {
     this.setState({
@@ -154,7 +153,6 @@ class App extends Component {
     });
     // loopataan productsToPantryArray läpi ja päivitetään kullakin kierroksella stateen uusi tuote.
     productsToPantryArray.forEach(tuote => {
-      //%%%%%%%%%%%%%%%%%%%%%%% EHKÄ TÄHÄN VÄLIIN PVM %%%%%%%%%%%%%%%%%%%%%%%
       const date = new Date();
       const day = date.getDate();
       let month = date.getMonth();
@@ -165,7 +163,6 @@ class App extends Component {
       // alempi rivi poistaa objekteista collected-propertyn
       //delete tuote.collected;
       console.log('tuote on: ', tuote);
-      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
@@ -175,12 +172,12 @@ class App extends Component {
   sendToDescription = (evt) => {
     const stateToDesc = { ...this.state };
     delete stateToDesc.user;
-    console.log('stateToDesc:', stateToDesc);
-    const testi = JSON.stringify(stateToDesc);
-    console.log('testi(STRING-muotoinen lähetettävä state):', testi);
+    console.log('Tämä on backendiin lähetettävä käyttäjän state', stateToDesc);
+    const stateToDescString = JSON.stringify(stateToDesc);
+    console.log('Tämä on backendiin lähetettävä käyttäjän state muutettuna merkkijonoksi', stateToDescString);
     const token2 = localStorage.getItem('token2');
     const data = {
-      description: `${testi}`,
+      description: `${stateToDescString}`,
     };
     const settings = {
       method: "PUT",
@@ -194,24 +191,25 @@ class App extends Component {
       return res.json();
     }).then(json => {
       console.log(json);
-    }).catch(err => console.log('tämä error tuli:', err));
+    }).catch(err => console.log('Tämä error tuli sendToDescription:n aikana:', err));
   }
 
   fetchFromDescription = (evt) => {
-    console.log('this.state.user.profilePic.file_id', this.state.user.profilePic.file_id);
     fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id).then(res => {
       return res.json();
     }).then(json => {
+      // String-muotoinen state parsetetaan JS-objektiksi
       console.log(JSON.parse(json.description));
-    }).catch(err => console.log('tämä error tuli:', err));
+    }).catch(err => console.log('Tämä error tuli fetchFromDescription:n aikana:', err));
   }
 
-  villenTesti = () => {
+  // ??? 2.5.19 KLO 9:55 ONKOHAN TÄMÄ METODI TURHA ???
+  isUserLoggedIn = () => {
     if (this.state.user === undefined) {
-      console.log('ei ole käyttäjää. SOO SOO!');
+      console.log('Statessa ei ole käyttäjää. Ohjataan kirjautumissivulle...');
       this.props.history.push('/');
     } else {
-      console.log('on käyttäjä. JEE!');
+      console.log('Statessa on käyttäjä.');
     }
   }
 
@@ -250,8 +248,6 @@ class App extends Component {
       localStorage.setItem('munOstoslista', JSON.stringify(this.state));
     });
   }
-
-
 
 
 
