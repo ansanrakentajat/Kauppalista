@@ -6,13 +6,16 @@ import uuid from 'uuid';
 import NavigationBar from './components/NavigationBar';
 import Pantry from './views/Pantry';
 import Login from './views/Login';
-import { getFilesByTag } from './util/MediaAPI';
+import Recipes from './views/Recipes';
+import OneRecipe from './views/OneRecipe';
+import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
 
 class App extends Component {
   state = {
     user: null,
+    recipeArray: [],
     pantry: [
       {
         id: uuid.v4(),
@@ -49,6 +52,16 @@ class App extends Component {
     }
   }
 
+  updateRecipes = () => {
+    getAllMedia('kpList4jaks4AnsanRakentaja').then((foods) => {
+      console.log(foods);
+      this.setState({recipeArray: foods});
+    });
+  };
+
+  componentDidMount() {
+    this.updateRecipes();
+  }
 
   setUser = (user) => {
     this.setState({ user });
@@ -189,6 +202,7 @@ class App extends Component {
   sendToDescription = (evt) => {
     const stateToDesc = { ...this.state };
     delete stateToDesc.user;
+    delete stateToDesc.recipeArray;
     //console.log('Tämä on backendiin lähetettävä käyttäjän state', stateToDesc);
     const stateToDescString = JSON.stringify(stateToDesc);
     //console.log('Tämä on backendiin lähetettävä käyttäjän state muutettuna merkkijonoksi', stateToDescString);
@@ -271,12 +285,12 @@ class App extends Component {
   //---------------------------------------------------------------------------------------------------------------
 
 
+
   render() {
     return (
       <Router>
         <div className="App">
           <NavigationBar />
-
           <Route exact path="/" render={(props) => (
             <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
           )} />
@@ -292,6 +306,14 @@ class App extends Component {
             </React.Fragment>
           )}>
           </Route>
+          <Route exact path="/reseptit" render={props => (
+                <React.Fragment>
+                  <Recipes {...props} picArray={this.state.recipeArray} />
+                </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/resepti/:id" component={OneRecipe}>
+            </Route>
           <Route path="/asetukset" render={props => (
             <React.Fragment>
               <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
