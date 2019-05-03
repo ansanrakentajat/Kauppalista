@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import PantryItemList from '../components/PantryItemList';
+import PantryAddItem from '../components/PantryAddItem';
+import PantryFooter from '../components/PantryFooter';
 
 class Pantry extends Component {
 
@@ -13,20 +16,32 @@ class Pantry extends Component {
   }
 
   render() {
-    //console.log(this.props.stateToPantry);
     return (
       <React.Fragment>
-        <ul>{this.props.stateToPantry.pantry.map(element => (
-          <li key={element.id}>{element.title} {element.amount} {element.unit}</li>)
-        )}</ul>
+        <div style={divStyle}>
+        <h1>Ruokakomero</h1>
+          <PantryAddItem addPantryItem={this.props.addPantryItem} />
+          <PantryItemList changePantryTitle={this.props.changePantryTitle} stateToPantry={this.props.stateToPantry} deletePantryItem={this.props.deletePantryItem} />
+        </div>
+        <PantryFooter />
       </React.Fragment>
     )
   }
 }
 
+const divStyle = {
+  
+  height: '80vh',
+  overflow: 'auto',
+  display: 'flex',
+  flexDirection: 'column'
+};
+
+
 Pantry.propTypes = {
   stateToPantry: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  deletePantryItem: PropTypes.func
 };
 
 export default Pantry
