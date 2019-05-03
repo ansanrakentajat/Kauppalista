@@ -10,13 +10,14 @@ import Pantry from './views/Pantry';
 import Login from './views/Login';
 import Recipes from './views/Recipes';
 import OneRecipe from './views/OneRecipe';
-import { getFilesByTag } from './util/MediaAPI';
+import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
 
 class App extends Component {
   state = {
     user: null,
+    recipeArray: [],
     pantry: [
       {
         id: uuid.v4(),
@@ -53,6 +54,16 @@ class App extends Component {
     }
   }
 
+  updateRecipes = () => {
+    getAllMedia('kpList4jaks4AnsanRakentaja').then((foods) => {
+      console.log(foods);
+      this.setState({recipeArray: foods});
+    });
+  };
+
+  componentDidMount() {
+    this.updateRecipes();
+  }
 
   setUser = (user) => {
     this.setState({ user });
@@ -179,6 +190,8 @@ class App extends Component {
   sendToDescription = (evt) => {
     const stateToDesc = { ...this.state };
     delete stateToDesc.user;
+    //poistaa reseptit userin descistä
+    delete stateToDesc.recipeArray;
     console.log('stateToDesc:', stateToDesc);
     const testi = JSON.stringify(stateToDesc);
     console.log('testi(STRING-muotoinen lähetettävä state):', testi);
@@ -220,6 +233,7 @@ class App extends Component {
   }
 
 
+
   render() {
     return (
       <Router>
@@ -244,15 +258,11 @@ class App extends Component {
             </Route>
             <Route exact path="/reseptit" render={props => (
                 <React.Fragment>
-                  <Recipes />
+                  <Recipes {...props} picArray={this.state.recipeArray} />
                 </React.Fragment>
             )}>
             </Route>
-            <Route exact path="/resepti" render={props => (
-                <React.Fragment>
-                  <OneRecipe />
-                </React.Fragment>
-            )}>
+            <Route exact path="/resepti/:id" component={OneRecipe}>
             </Route>
             <Route path="/asetukset" render={props => (
               <React.Fragment>
