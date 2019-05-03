@@ -6,7 +6,6 @@ class PantryFooter extends Component {
         return (
             <React.Fragment>
                 <div style={footerStyle}>
-                moi
                 </div>
             </React.Fragment>
         )
