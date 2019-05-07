@@ -126,7 +126,7 @@ class Login extends Component {
         </div>
         {this.state.formToggler &&
           <React.Fragment>
-            <h1>Login moi</h1>
+            <h1>Login</h1>
             <form onSubmit={this.handleLoginSubmit}>
               <TextField fullWidth required name="username" id="username"
                 label="Username"
