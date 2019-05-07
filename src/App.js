@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import ShoppingList from './components/ShoppingList';
 import uuid from 'uuid';
@@ -9,8 +9,9 @@ import Login from './views/Login';
 import Recipes from './views/Recipes';
 import OneRecipe from './views/OneRecipe';
 import Profilepic from './views/Profilepic';
-import {getAllMedia, getFilesByTag} from './util/MediaAPI';
+import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
+
 
 class App extends Component {
   state = {
@@ -22,8 +23,8 @@ class App extends Component {
         title: 'Maito',
         amount: '1.5',
         unit: 'l',
-        collected: false,
-      },
+        collected: false
+      }
     ],
     shoppingList: {
       items: [
@@ -32,25 +33,25 @@ class App extends Component {
           title: 'Maito',
           amount: '1',
           unit: 'l',
-          collected: false,
+          collected: false
         },
         {
           id: uuid.v4(),
           title: 'Kananmuna',
           amount: '12',
           unit: 'kpl',
-          collected: false,
+          collected: false
         },
         {
           id: uuid.v4(),
           title: 'Leipä',
           amount: '1',
           unit: 'pss',
-          collected: false,
-        },
-      ],
-    },
-  };
+          collected: false
+        }
+      ]
+    }
+  }
 
   updateRecipes = () => {
     getAllMedia('kpList4jaks4AnsanRakentaja').then((foods) => {
@@ -64,7 +65,7 @@ class App extends Component {
   }
 
   setUser = (user) => {
-    this.setState({user});
+    this.setState({ user });
     // hae profiilikuva ja liitä se user-objektiin
     const myPromise = new Promise((resolve, reject) => {
       getFilesByTag('profile').then((files) => {
@@ -95,8 +96,10 @@ class App extends Component {
     return myPromise;
   };
 
+ 
   setUserLogout = (user) => {
-    this.setState({user});
+    this.setState({ user });
+
   };
 
   checkLogin = () => {
@@ -113,7 +116,8 @@ class App extends Component {
     month++;
     const year = todayDate.getFullYear();
     return `${day}.${month}.${year}`;
-  };
+  }
+
 
   // Tällä metodilla muutetaan statessa ShoppingList itemin collected-arvo päinvastaiseksi.
   markComplete = (id) => {
@@ -124,24 +128,20 @@ class App extends Component {
             item.collected = !item.collected;
           }
           return item;
-        }),
-      },
-    }, () => {
-      this.sendToDescription();
-    });
-  };
 
+       })
+      }
+    }, () => { this.sendToDescription() });
+  }
+
+       
   // Tällä metodilla poistetaan tietty ShoppingList:n item statesta.
   deleteItem = (id) => {
-    this.setState({
-      shoppingList: {
-        items: [
-          ...this.state.shoppingList.items.filter(item => item.id !== id)],
-      },
-    }, () => {
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } }, () => {
       this.sendToDescription();
     });
-  };
+  }
+
 
   // Tällä metodilla lisätään stateen ShoppingList:n itemi.
   addItem = (title, amount, unit) => {
@@ -150,22 +150,19 @@ class App extends Component {
       title: title,
       amount: amount,
       unit: unit,
-      collected: false,
+      collected: false
     };
-    this.setState(
-        {shoppingList: {items: [...this.state.shoppingList.items, newItem]}},
-        () => {
-          //console.log('Here is the whole state after adding shopping list item', this.state);
-          localStorage.setItem('munOstoslista', JSON.stringify(this.state));
-          this.sendToDescription();
-        });
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items, newItem] } }, () => {
+      //console.log('Here is the whole state after adding shopping list item', this.state);
+      localStorage.setItem('munOstoslista', JSON.stringify(this.state));
+      this.sendToDescription();
+    });
 
-  };
+  }
 
   // Tällä metodilla lisäätään ostoslistan rivit ruokakomeroon ja tyhjennetään ostoslista.
   addToPantry = () => {
-    const collectedItems = [
-      ...this.state.shoppingList.items.filter(item => item.collected === true)];
+    const collectedItems = [...this.state.shoppingList.items.filter(item => item.collected === true)];
     //console.log(collectedItems, 'collected items');
 
     // luodaan uusi Set-objekti, joka sisältää kaikki uniikit ostoslistan titlet
@@ -174,9 +171,7 @@ class App extends Component {
     const arrayByTitle = [];
     // loopataan setOfUniqueTitles läpi ja kullakin kierroksella luodaan array, johon filteröity sen kierroksen samannimiset ostoslistan rivit
     setOfUniqueTitles.forEach((uniqueTitle) => {
-      const tempArray = [
-        ...this.state.shoppingList.items.filter(
-            item => item.title === uniqueTitle)];
+      const tempArray = [...this.state.shoppingList.items.filter(item => item.title === uniqueTitle)];
       arrayByTitle.push(tempArray);
     });
     // luodaan array, johon laitetaan arrayt samannimisistä ja samanyksikköisistä objekteista.
@@ -207,29 +202,19 @@ class App extends Component {
     productsToPantryArray.forEach(tuote => {
       // Käytetään ylempänä määriteltyä metodia 'thisDate'.
       const dateAdded = this.thisDate();
-      tuote = {...tuote, dateAdded};
+      tuote = { ...tuote, dateAdded };
       // alempi rivi poistaa objekteista collected-propertyn
       //delete tuote.collected;
       //console.log('tuote on: ', tuote);
-      this.setState(prevState => {
-        return {pantry: [...prevState.pantry, tuote]};
-      });
+      this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
-    this.setState({
-      shoppingList: {
-        items: [
-          ...this.state.shoppingList.items.filter(
-              item => item.collected === false)],
-      },
-    }, () => {
-      this.sendToDescription();
-    });
-  };
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => {this.sendToDescription()});
+  }
 
   // Tällä metodilla lähetetään käyttäjän state backendiin käyttäjän profiilikuvan description-kenttään.
   sendToDescription = (evt) => {
-    const stateToDesc = {...this.state};
+    const stateToDesc = { ...this.state };
     delete stateToDesc.user;
     delete stateToDesc.recipeArray;
     //console.log('Tämä on backendiin lähetettävä käyttäjän state', stateToDesc);
@@ -240,40 +225,29 @@ class App extends Component {
       description: `${stateToDescString}`,
     };
     const settings = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': token2,
+        "Content-Type": "application/json",
+        "x-access-token": token2
       },
       body: JSON.stringify(data),
     };
-    fetch('http://media.mw.metropolia.fi/wbma/media/' +
-        this.state.user.profilePic.file_id, settings).
-        then(res => {
-          return res.json();
-        }).
-        then(json => {
-          //console.log(json);
-        }).
-        catch(err => console.log('Tämä error tuli sendToDescription:n aikana:',
-            err));
-  };
+    fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id, settings).then(res => {
+      return res.json();
+    }).then(json => {
+      //console.log(json);
+    }).catch(err => console.log('Tämä error tuli sendToDescription:n aikana:', err));
+  }
 
   // Tällä metodilla haetaan backendistä käyttäjän profiilikuvan description-kentästä tallennettu state ja se asetetaan staten arvoksi.
   fetchFromDescription = (evt) => {
-    fetch('http://media.mw.metropolia.fi/wbma/media/' +
-        this.state.user.profilePic.file_id).
-        then(res => {
-          return res.json();
-        }).
-        then(json => {
-          // String-muotoinen state parsetetaan JS-objektiksi
-          //console.log(JSON.parse(json.description));
-        }).
-        catch(
-            err => console.log('Tämä error tuli fetchFromDescription:n aikana:',
-                err));
-  };
+    fetch('http://media.mw.metropolia.fi/wbma/media/' + this.state.user.profilePic.file_id).then(res => {
+      return res.json();
+    }).then(json => {
+      // String-muotoinen state parsetetaan JS-objektiksi
+      //console.log(JSON.parse(json.description));
+    }).catch(err => console.log('Tämä error tuli fetchFromDescription:n aikana:', err));
+  }
 
   // ??? 2.5.19 KLO 9:55 ONKOHAN TÄMÄ METODI TURHA ???
   isUserLoggedIn = () => {
@@ -283,15 +257,12 @@ class App extends Component {
     } else {
       console.log('Statessa on käyttäjä.');
     }
-  };
+  }
 
   // Tällä metodilla poistetaan Pantry:n itemi statesta.
   deletePantryItem = (id) => {
-    this.setState(
-        {pantry: [...this.state.pantry.filter(item => item.id !== id)]}, () => {
-          this.sendToDescription();
-        });
-  };
+    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => {this.sendToDescription()});
+  }
 
   // Tällä metodilla päivitetään muutettu Pantry:n itemin title stateen.
   changePantryTitle = (newTitle, id) => {
@@ -301,12 +272,9 @@ class App extends Component {
           item.title = newTitle;
         }
         return item;
-      }),
-    }, () => {
-      this.sendToDescription();
-    });
-  };
-
+      })
+    }, () => {this.sendToDescription()});
+  }
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
   addPantryItem = (title, amount, unit) => {
     // Käytetään ylempänä määriteltyä metodia 'thisDate'.
@@ -317,53 +285,43 @@ class App extends Component {
       title: title,
       amount: amount,
       unit: unit,
-      dateAdded: dateAdded,
+      dateAdded: dateAdded
     };
-    this.setState({pantry: [...this.state.pantry, newItem]}, () => {
+    this.setState({ pantry: [...this.state.pantry, newItem] }, () => {
       //console.log('Here is the whole state after adding pantry item', this.state);
       localStorage.setItem('munOstoslista', JSON.stringify(this.state));
       this.sendToDescription();
     });
-  };
+  }
+
 
   //---------------------------------------------------------------------------------------------------------------
 
+
+
   render() {
     return (
-        <Router>
-          <div className="App">
-            <NavigationBar/>
-            <Route exact path="/" render={(props) => (
-                <Login {...props} state={this.state}
-                       redirectToProfilepic={this.redirectToProfilepic}
-                       fetchFromDescription={this.fetchFromDescription}
-                       setUser={this.setUser}/>
-            )}/>
-            <Route path="/ruokakomero" render={props => (
+      <Router>
+        <div className="App">
+          <NavigationBar />
+          <Route exact path="/" render={(props) => (
+            <Login {...props} state={this.state} fetchFromDescription={this.fetchFromDescription} setUser={this.setUser} />
+          )} />
+          <Route path="/ruokakomero" render={props => (
+            <React.Fragment>
+              <Pantry {...props} addPantryItem={this.addPantryItem} changePantryTitle={this.changePantryTitle} stateToPantry={this.state} deletePantryItem={this.deletePantryItem} />
+            </React.Fragment>
+          )}>
+          </Route>
+          <Route path="/ostoslista" render={props => (
+            <React.Fragment>
+              <ShoppingList {...props} stateForLoggedIn={this.state} sendToDescription={this.sendToDescription} fetchFromDescription={this.fetchFromDescription} addToPantry={this.addToPantry} stateItemsForShoppingList={this.state.shoppingList.items} markComplete={this.markComplete} deleteItem={this.deleteItem} addItem={this.addItem} />
+            </React.Fragment>
+          )}>
+          </Route>
+          <Route exact path="/reseptit" render={props => (
                 <React.Fragment>
-                  <Pantry {...props} addPantryItem={this.addPantryItem}
-                          changePantryTitle={this.changePantryTitle}
-                          stateToPantry={this.state}
-                          deletePantryItem={this.deletePantryItem}/>
-                </React.Fragment>
-            )}>
-            </Route>
-            <Route path="/ostoslista" render={props => (
-                <React.Fragment>
-                  <ShoppingList {...props} stateForLoggedIn={this.state}
-                                sendToDescription={this.sendToDescription}
-                                fetchFromDescription={this.fetchFromDescription}
-                                addToPantry={this.addToPantry}
-                                stateItemsForShoppingList={this.state.shoppingList.items}
-                                markComplete={this.markComplete}
-                                deleteItem={this.deleteItem}
-                                addItem={this.addItem}/>
-                </React.Fragment>
-            )}>
-            </Route>
-            <Route exact path="/reseptit" render={props => (
-                <React.Fragment>
-                  <Recipes {...props} picArray={this.state.recipeArray}/>
+                  <Recipes {...props} picArray={this.state.recipeArray} />
                 </React.Fragment>
             )}>
             </Route>
@@ -387,5 +345,7 @@ class App extends Component {
     );
   }
 }
+
+
 
 export default App;

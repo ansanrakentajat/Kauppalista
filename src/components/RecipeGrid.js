@@ -13,8 +13,8 @@ const mediaUrl = 'http://media.mw.metropolia.fi/wbma/';
 const RecipeGrid = (props) => {
     return (
         <React.Fragment>
-        <GridList>
             {console.log('TÄSSÄ PROPSIT' + JSON.stringify(props))}
+        <GridList>
             /*Tähäh haku jos ehitään
             <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
                 <ListSubheader component="div"></ListSubheader>

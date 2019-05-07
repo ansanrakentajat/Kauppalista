@@ -35,6 +35,7 @@ const login = (username, password) => {
     });
 };
 
+
 const register = (user) => {
   const settings = {
     method: 'POST',
@@ -81,6 +82,7 @@ const getFilesByTag = (tag) => {
         return response.json();
     });
 };
+
 
 
 export { getAllMedia, getSingleMedia, getDescription, login, checkUser, getUser, getFilesByTag, register };

@@ -43,6 +43,6 @@ ShoppingList.propTypes = {
     sendToDescription: PropTypes.func.isRequired,
     fetchFromDescription: PropTypes.func.isRequired,
     stateForLoggedIn: PropTypes.object.isRequired,
-};
+}
 
 export default ShoppingList
