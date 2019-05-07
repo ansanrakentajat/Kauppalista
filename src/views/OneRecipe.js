@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getSingleMedia, getDescription} from '../util/MediaAPI';
+import {getSingleMedia, /*getDescription*/} from '../util/MediaAPI';
 import {Button} from '@material-ui/core';
-import Ingredients from '../components/Ingredients';
+//import Ingredients from '../components/Ingredients';
 import  uuid from 'uuid';
 
 class OneRecipe extends Component {
@@ -48,16 +48,16 @@ class OneRecipe extends Component {
 
     render() {
         const {title, filename, media_type} = this.state.file;
-        let {description} = this.state.file;
+        //let {description} = this.state.file;
         console.log(this.state, 'ville sanoo moi');
         //description = description.substring(1, description.length-1);
-        let ingredients = {
+        /*let ingredients = {
             ingredients: [
                 {
                     title: "moro"
                 }
             ]
-        };
+        };*/
         /*try {
             ingredients = JSON.parse(description);
         } catch (e) {

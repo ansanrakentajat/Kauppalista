@@ -55,7 +55,7 @@ class App extends Component {
   updateRecipes = () => {
     getAllMedia('kpList4jaks4AnsanRakentaja').then((foods) => {
       console.log(foods);
-      this.setState({recipeArray: foods});
+      this.setState({ recipeArray: foods });
     });
   };
 
@@ -65,27 +65,39 @@ class App extends Component {
 
   setUser = (user) => {
     this.setState({ user });
-    // hae profiilikuva ja liitä se user-objektiin
-    getFilesByTag('profile').then((files) => {
-      const profilePic = files.filter((file) => {
-        let outputFile = null;
-        if (file.user_id === this.state.user.user_id) {
-          outputFile = file;
-        }
-        return outputFile;
-      });
-
-      this.setState((prevState) => {
-        return {
-          user: {
-            ...prevState.user,
-            profilePic: profilePic[0],
-          },
-        };
-      }, () => {
-        this.setState(JSON.parse(this.state.user.profilePic.description));
-      });
+    const myPromise = new Promise((resolve, reject) => {
+      // hae profiilikuva ja liitä se user-objektiin
+      getFilesByTag('profile').then((files) => {
+        const profilePic = files.filter((file) => {
+          let outputFile = null;
+          if (file.user_id === this.state.user.user_id) {
+            outputFile = file;
+          }
+          return outputFile;
+        });
+        // tässä vaiheessa haluaisin, että profilePic on undefined
+        this.setState((prevState) => {
+          return {
+            user: {
+              ...prevState.user,
+              profilePic: profilePic[0],
+            },
+          };
+        }, () => {
+          // katsotaan onko statessa user ja sen profiilikuva
+          console.log(this.state.user, 'tässä vaiheessa statessa on user ja sen profiilikuva');
+          if (this.state.user.profilePic === undefined) {
+            console.log('Tähän console logiin päästiin ja nyt voidaan resolvoida promise');
+            resolve('resolved');
+          } else {
+            // Tässä tallennetaan stateen parsetettu löytyneen profiilikuvan description
+            this.setState(JSON.parse(this.state.user.profilePic.description));
+          }
+        });
+      }); // getFilesByTag:n lohko loppuu tähän
     });
+    // setUser-metodi palauttaa arvonaan resolvoidun myPromisen
+    return myPromise;
   };
 
   setUserLogout = (user) => {
@@ -195,7 +207,7 @@ class App extends Component {
       this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
-    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => {this.sendToDescription()});
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla lähetetään käyttäjän state backendiin käyttäjän profiilikuvan description-kenttään.
@@ -247,7 +259,7 @@ class App extends Component {
 
   // Tällä metodilla poistetaan Pantry:n itemi statesta.
   deletePantryItem = (id) => {
-    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => {this.sendToDescription()});
+    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla päivitetään muutettu Pantry:n itemin title stateen.
@@ -259,7 +271,7 @@ class App extends Component {
         }
         return item;
       })
-    }, () => {this.sendToDescription()});
+    }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
@@ -288,7 +300,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename='/~villeatu/periodi4/190503kauppalista'>
         <div className="App">
           <NavigationBar />
           <Route exact path="/" render={(props) => (
@@ -307,13 +319,13 @@ class App extends Component {
           )}>
           </Route>
           <Route exact path="/reseptit" render={props => (
-                <React.Fragment>
-                  <Recipes {...props} picArray={this.state.recipeArray} />
-                </React.Fragment>
-            )}>
-            </Route>
-            <Route exact path="/resepti/:id" component={OneRecipe}>
-            </Route>
+            <React.Fragment>
+              <Recipes {...props} picArray={this.state.recipeArray} />
+            </React.Fragment>
+          )}>
+          </Route>
+          <Route exact path="/resepti/:id" component={OneRecipe}>
+          </Route>
           <Route path="/asetukset" render={props => (
             <React.Fragment>
               <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />

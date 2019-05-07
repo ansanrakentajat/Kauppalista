@@ -30,7 +30,6 @@ class Pantry extends Component {
 }
 
 const divStyle = {
-  
   height: '80vh',
   overflow: 'auto',
   display: 'flex',

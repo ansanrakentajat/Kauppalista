@@ -4,6 +4,8 @@ import { TextField, Button } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { login, checkUser, getUser } from '../util/MediaAPI';
+// import { resolve } from 'path';
+// import { reject } from 'q';
 
 class Login extends Component {
     state = {
@@ -33,15 +35,18 @@ class Login extends Component {
         login(this.state.user.username, this.state.user.password).then(response => {
             //console.log(response);
             if (response.user !== undefined) {
-                this.props.setUser(response.user);
+                const testi = this.props.setUser(response.user);
                 localStorage.setItem('token2', response.token);
-                this.props.history.push('/ostoslista');
+                return testi;
             } else {
                 this.setState({ message: response.message });
             }
-        }).then(() => {
-            console.log('koska päästään tänne', this.props.state);
-            
+        }).then((testi2) => {
+            if (testi2 === 'resolved') {
+                this.props.history.push('/asetukset');
+            } else {
+                this.props.history.push('/ostoslista');
+            }
         }).catch((err) => {
             console.log(err);
         });
@@ -75,11 +80,18 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        console.log(localStorage.getItem('token2'));
+        //console.log(localStorage.getItem('token2'));
         if (localStorage.getItem('token2') !== null) {
             getUser(localStorage.getItem('token2')).then(response => {
-                this.props.setUser(response);
-                this.props.history.push('/ostoslista');
+                console.log(response, 'responsen sisältö');
+                const testi = this.props.setUser(response);
+                return testi;
+            }).then(setUserVALMIS => {
+                if (setUserVALMIS === 'resolved') {
+                    this.props.history.push('/asetukset');
+                } else {
+                    this.props.history.push('/ostoslista');
+                }
             });
         }
         // custom rule will have name 'isPasswordMatch'
@@ -90,6 +102,34 @@ class Login extends Component {
             return this.state.validUser;
         });
     }
+
+
+
+    // componentDidMount() {
+    //     //console.log(localStorage.getItem('token2'));
+    //     if (localStorage.getItem('token2') !== null) {
+
+    //         getUser(localStorage.getItem('token2')).then(response => {
+    //             console.log('LOGIN.JS RIVI 84: tämä on juuri ennen setUser:ia. VOL2');
+    //             //this.props.setUser(response);
+    //             this.props.setUser(response).then(jotain => console.log(jotain, 'KOSKA PÄÄSTÄÄN TÄNNE???')
+    //             );
+    //             console.log('tämä on juuri ennen localStoragea. Onkohan setUser jo valmis??? VOL2');
+    //             this.props.history.push('/ostoslista');
+    //         });
+    //     }
+    //     // custom rule will have name 'isPasswordMatch'
+    //     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+    //         return value === this.state.user.password;
+    //     });
+    //     ValidatorForm.addValidationRule('isUserAvailable', () => {
+    //         return this.state.validUser;
+    //     });
+    // }
+
+
+
+
 
     render() {
         return (
