@@ -8,6 +8,7 @@ import Pantry from './views/Pantry';
 import Login from './views/Login';
 import Recipes from './views/Recipes';
 import OneRecipe from './views/OneRecipe';
+import Profilepic from './views/Profilepic';
 import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
@@ -65,8 +66,8 @@ class App extends Component {
 
   setUser = (user) => {
     this.setState({ user });
+    // hae profiilikuva ja liitä se user-objektiin
     const myPromise = new Promise((resolve, reject) => {
-      // hae profiilikuva ja liitä se user-objektiin
       getFilesByTag('profile').then((files) => {
         const profilePic = files.filter((file) => {
           let outputFile = null;
@@ -75,7 +76,6 @@ class App extends Component {
           }
           return outputFile;
         });
-        // tässä vaiheessa haluaisin, että profilePic on undefined
         this.setState((prevState) => {
           return {
             user: {
@@ -84,24 +84,22 @@ class App extends Component {
             },
           };
         }, () => {
-          // katsotaan onko statessa user ja sen profiilikuva
-          console.log(this.state.user, 'tässä vaiheessa statessa on user ja sen profiilikuva');
+          console.log('set staten logi', this.state.user.profilePic);
           if (this.state.user.profilePic === undefined) {
-            console.log('Tähän console logiin päästiin ja nyt voidaan resolvoida promise');
             resolve('resolved');
           } else {
-            // Tässä tallennetaan stateen parsetettu löytyneen profiilikuvan description
             this.setState(JSON.parse(this.state.user.profilePic.description));
           }
         });
-      }); // getFilesByTag:n lohko loppuu tähän
+      });
     });
-    // setUser-metodi palauttaa arvonaan resolvoidun myPromisen
     return myPromise;
   };
 
+ 
   setUserLogout = (user) => {
     this.setState({ user });
+
   };
 
   checkLogin = () => {
@@ -120,6 +118,7 @@ class App extends Component {
     return `${day}.${month}.${year}`;
   }
 
+
   // Tällä metodilla muutetaan statessa ShoppingList itemin collected-arvo päinvastaiseksi.
   markComplete = (id) => {
     this.setState({
@@ -129,17 +128,20 @@ class App extends Component {
             item.collected = !item.collected;
           }
           return item;
-        })
+
+       })
       }
     }, () => { this.sendToDescription() });
   }
 
+       
   // Tällä metodilla poistetaan tietty ShoppingList:n item statesta.
   deleteItem = (id) => {
     this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } }, () => {
       this.sendToDescription();
     });
   }
+
 
   // Tällä metodilla lisätään stateen ShoppingList:n itemi.
   addItem = (title, amount, unit) => {
@@ -273,7 +275,6 @@ class App extends Component {
       })
     }, () => { this.sendToDescription() });
   }
-
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
   addPantryItem = (title, amount, unit) => {
     // Käytetään ylempänä määriteltyä metodia 'thisDate'.
@@ -319,21 +320,28 @@ class App extends Component {
           )}>
           </Route>
           <Route exact path="/reseptit" render={props => (
-            <React.Fragment>
-              <Recipes {...props} picArray={this.state.recipeArray} />
-            </React.Fragment>
-          )}>
-          </Route>
-          <Route exact path="/resepti/:id" component={OneRecipe}>
-          </Route>
-          <Route path="/asetukset" render={props => (
-            <React.Fragment>
-              <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
-            </React.Fragment>
-          )}>
-          </Route>
-        </div>
-      </Router>
+                <React.Fragment>
+                  <Recipes {...props} picArray={this.state.recipeArray} />
+                </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/resepti/:id" component={OneRecipe}>
+            </Route>
+            <Route path="/asetukset" render={props => (
+                <React.Fragment>
+                  <Settings {...props}
+                            sendToDescription={this.sendToDescription}
+                            stateForLoggedIn={this.state}
+                            setUserLogout={this.setUserLogout}/>
+                </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/profiilikuva" render={props => (
+                <Profilepic {...props} stateForLoggedIn={this.state}
+                            setUser={this.setUser}/>
+            )}/>
+          </div>
+        </Router>
     );
   }
 }
