@@ -11,6 +11,7 @@ import OneRecipe from './views/OneRecipe';
 import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
+//anna sanoo moi
 
 class App extends Component {
   state = {
