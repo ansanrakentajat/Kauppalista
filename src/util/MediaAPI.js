@@ -35,6 +35,20 @@ const login = (username, password) => {
     });
 };
 
+
+const register = (user) => {
+  const settings = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  };
+  return fetch(apiUrl + 'users', settings).then(response => {
+    return response.json();
+  });
+};
+
 const checkUser = (username) => {
     return fetch(apiUrl + 'users/username/' + username).then(response => {
         return response.json();
@@ -70,4 +84,5 @@ const getFilesByTag = (tag) => {
 };
 
 
-export { getAllMedia, getSingleMedia, getDescription, login, checkUser, getUser, getFilesByTag };
+
+export { getAllMedia, getSingleMedia, getDescription, login, checkUser, getUser, getFilesByTag, register };
