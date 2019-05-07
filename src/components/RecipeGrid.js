@@ -8,7 +8,6 @@ import {
     ListSubheader,
 } from '@material-ui/core';
 
-
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/';
 
 const RecipeGrid = (props) => {

@@ -8,6 +8,7 @@ import Pantry from './views/Pantry';
 import Login from './views/Login';
 import Recipes from './views/Recipes';
 import OneRecipe from './views/OneRecipe';
+import Profilepic from './views/Profilepic';
 import { getAllMedia, getFilesByTag } from './util/MediaAPI';
 import Settings from './views/Settings';
 
@@ -66,30 +67,39 @@ class App extends Component {
   setUser = (user) => {
     this.setState({ user });
     // hae profiilikuva ja liitä se user-objektiin
-    getFilesByTag('profile').then((files) => {
-      const profilePic = files.filter((file) => {
-        let outputFile = null;
-        if (file.user_id === this.state.user.user_id) {
-          outputFile = file;
-        }
-        return outputFile;
-      });
-
-      this.setState((prevState) => {
-        return {
-          user: {
-            ...prevState.user,
-            profilePic: profilePic[0],
-          },
-        };
-      }, () => {
-        this.setState(JSON.parse(this.state.user.profilePic.description));
+    const myPromise = new Promise((resolve, reject) => {
+      getFilesByTag('profile').then((files) => {
+        const profilePic = files.filter((file) => {
+          let outputFile = null;
+          if (file.user_id === this.state.user.user_id) {
+            outputFile = file;
+          }
+          return outputFile;
+        });
+        this.setState((prevState) => {
+          return {
+            user: {
+              ...prevState.user,
+              profilePic: profilePic[0],
+            },
+          };
+        }, () => {
+          console.log('set staten logi', this.state.user.profilePic);
+          if (this.state.user.profilePic === undefined) {
+            resolve('resolved');
+          } else {
+            this.setState(JSON.parse(this.state.user.profilePic.description));
+          }
+        });
       });
     });
+    return myPromise;
   };
 
+ 
   setUserLogout = (user) => {
     this.setState({ user });
+
   };
 
   checkLogin = () => {
@@ -108,6 +118,7 @@ class App extends Component {
     return `${day}.${month}.${year}`;
   }
 
+
   // Tällä metodilla muutetaan statessa ShoppingList itemin collected-arvo päinvastaiseksi.
   markComplete = (id) => {
     this.setState({
@@ -117,17 +128,20 @@ class App extends Component {
             item.collected = !item.collected;
           }
           return item;
-        })
+
+       })
       }
     }, () => { this.sendToDescription() });
   }
 
+       
   // Tällä metodilla poistetaan tietty ShoppingList:n item statesta.
   deleteItem = (id) => {
     this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.id !== id)] } }, () => {
       this.sendToDescription();
     });
   }
+
 
   // Tällä metodilla lisätään stateen ShoppingList:n itemi.
   addItem = (title, amount, unit) => {
@@ -261,7 +275,6 @@ class App extends Component {
       })
     }, () => {this.sendToDescription()});
   }
-
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
   addPantryItem = (title, amount, unit) => {
     // Käytetään ylempänä määriteltyä metodia 'thisDate'.
@@ -314,14 +327,21 @@ class App extends Component {
             </Route>
             <Route exact path="/resepti/:id" component={OneRecipe}>
             </Route>
-          <Route path="/asetukset" render={props => (
-            <React.Fragment>
-              <Settings {...props} sendToDescription={this.sendToDescription} stateForLoggedIn={this.state} setUserLogout={this.setUserLogout} />
-            </React.Fragment>
-          )}>
-          </Route>
-        </div>
-      </Router>
+            <Route path="/asetukset" render={props => (
+                <React.Fragment>
+                  <Settings {...props}
+                            sendToDescription={this.sendToDescription}
+                            stateForLoggedIn={this.state}
+                            setUserLogout={this.setUserLogout}/>
+                </React.Fragment>
+            )}>
+            </Route>
+            <Route exact path="/profiilikuva" render={props => (
+                <Profilepic {...props} stateForLoggedIn={this.state}
+                            setUser={this.setUser}/>
+            )}/>
+          </div>
+        </Router>
     );
   }
 }
