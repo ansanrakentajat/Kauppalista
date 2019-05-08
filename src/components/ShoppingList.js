@@ -25,14 +25,15 @@ class ShoppingList extends Component {
                     <ItemList stateItemsForItemList={this.props.stateItemsForShoppingList} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem} />
                 </div>
                 <ShoppingListFooter sendToDescription={this.props.sendToDescription} fetchFromDescription={this.props.fetchFromDescription} addToPantry={this.props.addToPantry} />
+                
             </React.Fragment>
         )
     }
 }
 
 const divStyle = {
-    height: '80vh',
-    overflow: 'auto'
+    height: '70vh',
+    overflow: 'auto',
 };
 
 ShoppingList.propTypes = {

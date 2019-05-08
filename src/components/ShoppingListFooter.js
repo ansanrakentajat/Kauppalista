@@ -23,7 +23,6 @@ const footerStyle = {
   alignItems: 'center',
   backgroundColor: '#333',
   position: 'absolute',
-  bottom: '0'
 };
 
 const buttonStyle = {

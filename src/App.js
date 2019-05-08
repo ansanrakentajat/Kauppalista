@@ -56,7 +56,7 @@ class App extends Component {
   updateRecipes = () => {
     getAllMedia('kpList4jaks4AnsanRakentaja').then((foods) => {
       console.log(foods);
-      this.setState({recipeArray: foods});
+      this.setState({ recipeArray: foods });
     });
   };
 
@@ -93,7 +93,7 @@ class App extends Component {
           } else {
             resolve('testi');
             this.setState(JSON.parse(this.state.user.profilePic.description));
-            console.log('ei tomi');
+            resolve('testi');
           }
         });
       });
@@ -216,7 +216,7 @@ class App extends Component {
       this.setState(prevState => { return { pantry: [...prevState.pantry, tuote] } });
     });
     // tyhjennetään staten shopping listin items-array
-    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => {this.sendToDescription()});
+    this.setState({ shoppingList: { items: [...this.state.shoppingList.items.filter(item => item.collected === false)] } }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla lähetetään käyttäjän state backendiin käyttäjän profiilikuvan description-kenttään.
@@ -268,7 +268,7 @@ class App extends Component {
 
   // Tällä metodilla poistetaan Pantry:n itemi statesta.
   deletePantryItem = (id) => {
-    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => {this.sendToDescription()});
+    this.setState({ pantry: [...this.state.pantry.filter(item => item.id !== id)] }, () => { this.sendToDescription() });
   }
 
   // Tällä metodilla päivitetään muutettu Pantry:n itemin title stateen.
@@ -280,7 +280,7 @@ class App extends Component {
         }
         return item;
       })
-    }, () => {this.sendToDescription()});
+    }, () => { this.sendToDescription() });
   }
   // Tällä metodilla lisätään Pantryn uusi itemi stateen.
   addPantryItem = (title, amount, unit) => {
@@ -308,7 +308,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename='/~villeatu/periodi4/190503kauppalista'>
         <div className="App">
           <NavigationBar />
           <Route exact path="/" render={(props) => (
@@ -328,7 +328,7 @@ class App extends Component {
           </Route>
           <Route exact path="/reseptit" render={props => (
                 <React.Fragment>
-                  <Recipes {...props} picArray={this.state.recipeArray} />
+                  <Recipes {...props} picArray={this.state.recipeArray} statePantry={this.state.pantry} />
                 </React.Fragment>
             )}>
             </Route>

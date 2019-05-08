@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { /*Component*/ } from 'react';
 import PropTypes from 'prop-types';
-import { getFilesByTag } from "../util/MediaAPI";
+//import { getFilesByTag*/ } from "../util/MediaAPI";
 import RecipeGrid from "../components/RecipeGrid";
 
 //Täällä on kaikki reseptit listattuna
@@ -12,7 +12,7 @@ const Recipes = (props) => {
     return (
         <React.Fragment>
             <h1>Reseptit</h1>
-            <RecipeGrid picArray={picArray} edit={false}/>
+            <RecipeGrid picArray={picArray} edit={false} statePantry={props.statePantry}/>
         </React.Fragment>
     )
 

@@ -8,7 +8,7 @@ class ItemList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ width: '90%', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
+        <div style={{ width: '90%', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', marginBottom: '10vh'}}>
 
           <Paper style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
             <h3>KERÄÄMÄTTÖMÄT</h3>
