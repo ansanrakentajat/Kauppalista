@@ -47,18 +47,20 @@ class Login extends Component {
 
     login(this.state.user.username, this.state.user.password).then(response => {
       if (response.user !== undefined) {
+        console.log(response, 'login response');
         const jotain = this.props.setUser(response.user);
-          localStorage.setItem('token2', response.token);
-          return jotain;
+        console.log(jotain, 'jotain');
+        localStorage.setItem('token2', response.token);
+        return jotain;
       } else {
         this.setState({message: response.message});
       }
-    }).then((jotain2) => {
-      if(jotain2 === 'resolved'){
-       this.props.history.push('/profiilikuva');
-      }else{
-        this.props.history.push('/ostoslista');
-      }
+    }).then(jotain2 => {
+        if (jotain2 === 'resolved') {
+          this.props.history.push('/profiilikuva');
+        } else {
+          this.props.history.push('/ostoslista');
+        }
     }).catch((err) => {
       console.log(err);
     });
@@ -95,14 +97,12 @@ class Login extends Component {
     if (localStorage.getItem('token2') !== null) {
       getUser(localStorage.getItem('token2')).then(response => {
         const jotain = this.props.setUser(response);
-        return jotain;
-       }).then(jotain2=>{
-         if (jotain2 === 'resolved'){
-           this.props.history.push('/profiilikuva');
-         } else {
-           this.props.history.push('/ostoslista');
-         }
-      });
+        if (jotain === 'resolved'){
+          this.props.history.push('/profiilikuva');
+        } else {
+          this.props.history.push('/ostoslista');
+        }
+       });
     }
     // custom rule will have name 'isPasswordMatch'
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {

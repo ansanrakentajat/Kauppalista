@@ -15,10 +15,10 @@ const RecipeGrid = (props) => {
         <React.Fragment>
             {console.log('TÄSSÄ PROPSIT' + JSON.stringify(props))}
         <GridList>
-            /*Tähäh haku jos ehitään
+          {/*Tähäh haku jos ehitään
             <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
                 <ListSubheader component="div"></ListSubheader>
-            </GridListTile>*/
+            </GridListTile>*/}
             {props.picArray.map(tile => (
                 <GridListTile key={tile.file_id} component={Link} to={'resepti/' + tile.file_id}>
                     {tile.media_type === 'image' &&

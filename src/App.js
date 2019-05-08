@@ -66,6 +66,7 @@ class App extends Component {
 
   setUser = (user) => {
     this.setState({ user });
+    console.log('setuser state', this.state);
     // hae profiilikuva ja liitä se user-objektiin
     const myPromise = new Promise((resolve, reject) => {
       getFilesByTag('profile').then((files) => {
@@ -74,6 +75,7 @@ class App extends Component {
           if (file.user_id === this.state.user.user_id) {
             outputFile = file;
           }
+          //console.log('output file', outputFile);
           return outputFile;
         });
         this.setState((prevState) => {
@@ -87,11 +89,16 @@ class App extends Component {
           console.log('set staten logi', this.state.user.profilePic);
           if (this.state.user.profilePic === undefined) {
             resolve('resolved');
+            console.log('toimii ' + resolve);
           } else {
+            resolve('testi');
             this.setState(JSON.parse(this.state.user.profilePic.description));
+            console.log('ei tomi');
           }
         });
       });
+    }).catch(e=>{
+      console.log(e, 'erroria');
     });
     return myPromise;
   };
@@ -337,7 +344,9 @@ class App extends Component {
             )}>
             </Route>
             <Route exact path="/profiilikuva" render={props => (
-                <Profilepic {...props} stateForLoggedIn={this.state}
+                <Profilepic {...props}
+                            sendToDescription ={this.sendToDescription}
+                            stateForLoggedIn={this.state}
                             setUser={this.setUser}/>
             )}/>
           </div>
