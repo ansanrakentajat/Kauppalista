@@ -4,7 +4,6 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {Button} from '@material-ui/core';
 
 class Profilepic extends Component {
-  state
 
   componentDidMount() {
     if (this.props.stateForLoggedIn.user === null) {
