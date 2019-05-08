@@ -7,8 +7,6 @@ import uuid from 'uuid';
 
 //tyhjä description
 const luuranko = {
-  user: null,
-  recipeArray: [],
   pantry: [
     {
       id: uuid.v4(),
@@ -84,7 +82,7 @@ class Profilepic extends Component {
     this.setState({loading: true});
     const fd = new FormData();
     fd.append('title', this.state.file.title);
-    fd.append('description', luuranko);
+    fd.append('description', JSON.stringify(luuranko));
     fd.append('file', this.state.file.filedata);
 
     /* const options = {
@@ -122,7 +120,8 @@ class Profilepic extends Component {
           setTimeout(() => {
             //sendtodescription
             //this.props.sendToDescription(luuranko);
-            this.props.history.push('/ostoslista');
+           // this.props.history.push('/ostoslista');
+            this.props.setUser(this.state.user);
             this.setState({loading: false});
           }, 2000);
         });
@@ -131,9 +130,6 @@ class Profilepic extends Component {
   };
 
   render() {
-    {
-      console.log(this.props.user);
-    }
 
     return (
         <React.Fragment>

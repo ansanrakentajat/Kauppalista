@@ -66,6 +66,7 @@ class App extends Component {
 
   setUser = (user) => {
     this.setState({ user });
+    console.log('setuser state', this.state);
     // hae profiilikuva ja liitä se user-objektiin
     const myPromise = new Promise((resolve, reject) => {
       getFilesByTag('profile').then((files) => {
@@ -74,6 +75,7 @@ class App extends Component {
           if (file.user_id === this.state.user.user_id) {
             outputFile = file;
           }
+          //console.log('output file', outputFile);
           return outputFile;
         });
         this.setState((prevState) => {
