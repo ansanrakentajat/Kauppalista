@@ -12,7 +12,7 @@ const Recipes = (props) => {
     return (
         <React.Fragment>
             <h1>Reseptit</h1>
-            <RecipeGrid picArray={picArray} edit={false}/>
+            <RecipeGrid picArray={picArray} edit={false} statePantry={props.statePantry}/>
         </React.Fragment>
     )
 

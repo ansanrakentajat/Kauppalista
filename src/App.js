@@ -89,6 +89,7 @@ class App extends Component {
             resolve('resolved');
           } else {
             this.setState(JSON.parse(this.state.user.profilePic.description));
+            resolve('testi');
           }
         });
       });
@@ -321,7 +322,7 @@ class App extends Component {
           </Route>
           <Route exact path="/reseptit" render={props => (
                 <React.Fragment>
-                  <Recipes {...props} picArray={this.state.recipeArray} />
+                  <Recipes {...props} picArray={this.state.recipeArray} statePantry={this.state.pantry} />
                 </React.Fragment>
             )}>
             </Route>

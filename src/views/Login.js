@@ -96,13 +96,18 @@ class Login extends Component {
     if (localStorage.getItem('token2') !== null) {
       getUser(localStorage.getItem('token2')).then(response => {
         const jotain = this.props.setUser(response);
-        return jotain;
-      }).then(jotain2 => {
-        if (jotain2 === 'resolved') {
+        if (jotain === 'resolved') {
           this.props.history.push('/profiilikuva');
         } else {
           this.props.history.push('/ostoslista');
         }
+        //return jotain;
+      }).then(jotain2 => {
+        /*if (jotain2 === 'resolved') {
+          this.props.history.push('/profiilikuva');
+        } else {
+          this.props.history.push('/ostoslista');
+        }*/
       });
 
 
