@@ -15,10 +15,10 @@ class Item extends Component {
     return (
       <React.Fragment>
         <TableRow style={this.getStyle()}>
-          <TableCell><Checkbox checked={this.props.itemForItem.collected} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)} /></TableCell>
-          <TableCell>{this.props.itemForItem.title}</TableCell>
-          <TableCell>{this.props.itemForItem.amount} {this.props.itemForItem.unit}</TableCell>
-          <TableCell>
+          <TableCell style={tableCellStyle}><Checkbox checked={this.props.itemForItem.collected} onChange={this.props.markComplete.bind(this, this.props.itemForItem.id)} /></TableCell>
+          <TableCell style={tableCellStyle}>{this.props.itemForItem.title}</TableCell>
+          <TableCell style={tableCellStyle}>{this.props.itemForItem.amount} {this.props.itemForItem.unit}</TableCell>
+          <TableCell style={{padding: '1vw', textAlign: 'center'}}>
             <IconButton onClick={this.props.deleteItem.bind(this, this.props.itemForItem.id)}>
               <Tooltip title="Delete">
                 <Avatar>
@@ -32,6 +32,10 @@ class Item extends Component {
     )
   }
 }
+
+const tableCellStyle = {
+  padding: '1vw',
+};
 
 Item.propTypes = {
   itemForItem: PropTypes.object.isRequired,
