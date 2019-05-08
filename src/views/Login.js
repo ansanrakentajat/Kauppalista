@@ -47,6 +47,7 @@ class Login extends Component {
 
     login(this.state.user.username, this.state.user.password).then(response => {
       if (response.user !== undefined) {
+        /////////
         const jotain = this.props.setUser(response.user);
           localStorage.setItem('token2', response.token);
           return jotain;

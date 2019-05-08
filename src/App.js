@@ -92,6 +92,8 @@ class App extends Component {
           }
         });
       });
+    }).catch(e=>{
+      console.log(e, 'erroria');
     });
     return myPromise;
   };
@@ -337,7 +339,9 @@ class App extends Component {
             )}>
             </Route>
             <Route exact path="/profiilikuva" render={props => (
-                <Profilepic {...props} stateForLoggedIn={this.state}
+                <Profilepic {...props}
+                            sendToDescription ={this.sendToDescription}
+                            stateForLoggedIn={this.state}
                             setUser={this.setUser}/>
             )}/>
           </div>

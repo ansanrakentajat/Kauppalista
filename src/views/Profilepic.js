@@ -2,19 +2,37 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {Button} from '@material-ui/core';
+import {upload, uploadTag} from '../util/MediaAPI';
+import uuid from 'uuid';
+
+//tyhjä description
+const luuranko = {
+  user: null,
+  recipeArray: [],
+  pantry: [
+    {
+      id: uuid.v4(),
+      title: '',
+      amount: '',
+      unit: '',
+      collected: false
+    }
+  ],
+  shoppingList: {
+    items: [
+      {
+        id: uuid.v4(),
+        title: '',
+        amount: '',
+        unit: '',
+        collected: false
+      },
+    ]
+  }
+};
 
 class Profilepic extends Component {
-  state
 
-  componentDidMount() {
-    if (this.props.stateForLoggedIn.user === null) {
-      console.log('ET OLE KIRJAUTUNUT! SINUT SIIRRETÄÄN LOGIN-SIVULLE.');
-      this.props.history.push('/');
-    } else {
-      console.log('AI OLITKIN JO KIRJAUTUNUT.');
-    }
-  }
-  mediaUrl = 'http://media.mw.metropolia.fi/wbma/';
   state = {
     user: this.props.user,
     file: {
@@ -25,6 +43,16 @@ class Profilepic extends Component {
     },
     loading: false,
   };
+
+  componentDidMount() {
+    if (this.props.stateForLoggedIn.user === null) {
+      console.log('ET OLE KIRJAUTUNUT! SINUT SIIRRETÄÄN LOGIN-SIVULLE.');
+      this.props.history.push('/');
+    } else {
+      console.log('AI OLITKIN JO KIRJAUTUNUT.');
+    }
+  }
+
   handleFileChange = (evt) => {
     evt.persist();
     console.log(evt.target.files[0]);
@@ -56,32 +84,56 @@ class Profilepic extends Component {
     this.setState({loading: true});
     const fd = new FormData();
     fd.append('title', this.state.file.title);
-    fd.append('description', this.state.file.description);
+    fd.append('description', luuranko);
     fd.append('file', this.state.file.filedata);
 
-    const options = {
+    /* const options = {
+       method: 'POST',
+       body: fd,
+       headers: {
+         'x-access-token': localStorage.getItem('token'),
+       },
+     };
+
+     const upload = (data, token)=>{
+  const options ={
       method: 'POST',
-      body: fd,
-      headers: {
-        'x-access-token': localStorage.getItem('token'),
-      },
-    };
-
-    fetch(this.mediaUrl + 'media', options).then(response => {
-      return response.json();
-    }).then(json => {
+    body: data,
+    headers:{
+          'x-access-token': token,
+    },
+  };
+   return fetch(apiUrl + 'media', options).then(response =>{
+       return response.json();
+   });
+};
+     */
+    upload(fd, localStorage.getItem('token2')).then(json => {
       console.log(json);
+      const copy = { ...json };
+      console.log('copyyy: ' + copy);
       setTimeout(() => {
-        this.props.history.push('/home');
-        this.props.getMedia();
-        this.setState({loading: false});
+        const tagData = {
+          file_id: copy.file_id,
+          tag: 'profile'
+        };
+        uploadTag(tagData,localStorage.getItem('token2')).then(tagjson => {
+          console.log(tagjson);
+          setTimeout(() => {
+            //sendtodescription
+            //this.props.sendToDescription(luuranko);
+            this.props.history.push('/ostoslista');
+            this.setState({loading: false});
+          }, 2000);
+        });
       }, 2000);
-
     });
   };
 
-    render() {
-      {console.log(this.props.user)}
+  render() {
+    {
+      console.log(this.props.user);
+    }
 
     return (
         <React.Fragment>
@@ -97,16 +149,6 @@ class Profilepic extends Component {
                              'this field is required',
                              'minimum 3 charaters']}
                            fullWidth/>
-            <TextValidator name="description" label="Description"
-                           value={this.state.file.description}
-                           onChange={this.handleInputChange}
-                           validators={['required', 'minStringLength:3']}
-                           errorMessages={[
-                             'this field is required',
-                             'minimum 3 charaters']}
-                           fullWidth
-                           multiline
-                           rows={3}/>
             <TextValidator name="filedata" label="File"
                            value={this.state.file.filename}
                            type="file"
@@ -121,10 +163,12 @@ class Profilepic extends Component {
   }
 }
 
+
 Profilepic.propTypes = {
   user: PropTypes.object,
   history: PropTypes.object,
   stateForLoggedIn: PropTypes.object.isRequired,
+  sendToDescription: PropTypes.func,
 };
 
 export default Profilepic;
