@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getSingleMedia, /*getDescription*/} from '../util/MediaAPI';
-import {Button} from '@material-ui/core';
+import {getSingleMedia, getDescription} from '../util/MediaAPI';
+import {Button, List, ListItem} from '@material-ui/core';
 import Ingredients from '../components/Ingredients';
 import OneRecipeFooter from '../components/OneRecipeFooter';
 import uuid from 'uuid';
@@ -80,15 +80,19 @@ class OneRecipe extends Component {
               <div style={ingredientsStyle}>
                 {this.state.picJsonParsed.ingredients.map(element => (
                     <React.Fragment>
-                      <p key={uuid.v4()}>{element.title + ' ' + element.amount +
-                      ' ' + element.unit}</p>
+                      <List >
+                      <ListItem key={uuid.v4()} style={ingredientsStyle}>{element.amount +
+                      ' ' + element.unit + ' ' + element.title}</ListItem>
+                      </List>
                     </React.Fragment>
                 ))}
               </div>
               <div style={descStyle}>
                 {this.state.picJsonParsed.desc.map(element => (
                     <React.Fragment>
-                      <p key={uuid.v4()}>{element}</p>
+                      <List>
+                      <ListItem key={uuid.v4()} style={ingredientsStyle}>{element}</ListItem>
+                      </List>
                     </React.Fragment>
                 ))}
               </div>
@@ -106,7 +110,8 @@ const divstyle ={
   flexDirection: 'column'
 };
 const ingredientsStyle = {
-  padding: '10px',
+  padding: '1px',
+  paddingLeft: '10px'
 };
 
 const descStyle = {
