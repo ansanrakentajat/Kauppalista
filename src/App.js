@@ -89,8 +89,11 @@ class App extends Component {
           console.log('set staten logi', this.state.user.profilePic);
           if (this.state.user.profilePic === undefined) {
             resolve('resolved');
+            console.log('toimii ' + resolve);
           } else {
+            resolve('testi');
             this.setState(JSON.parse(this.state.user.profilePic.description));
+            console.log('ei tomi');
           }
         });
       });

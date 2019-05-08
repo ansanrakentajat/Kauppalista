@@ -50,16 +50,17 @@ class Login extends Component {
         console.log(response, 'login response');
         const jotain = this.props.setUser(response.user);
         console.log(jotain, 'jotain');
-          localStorage.setItem('token2', response.token);
-        if(jotain === 'resolved'){
-          this.props.history.push('/profiilikuva');
-        }else{
-          this.props.history.push('/ostoslista');
-        }
-         // return jotain;
+        localStorage.setItem('token2', response.token);
+        return jotain;
       } else {
         this.setState({message: response.message});
       }
+    }).then(jotain2 => {
+        if (jotain2 === 'resolved') {
+          this.props.history.push('/profiilikuva');
+        } else {
+          this.props.history.push('/ostoslista');
+        }
     }).catch((err) => {
       console.log(err);
     });

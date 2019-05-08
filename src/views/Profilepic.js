@@ -7,25 +7,9 @@ import uuid from 'uuid';
 
 //tyhjä description
 const luuranko = {
-  pantry: [
-    {
-      id: uuid.v4(),
-      title: '',
-      amount: '',
-      unit: '',
-      collected: false
-    }
-  ],
+  pantry: [],
   shoppingList: {
-    items: [
-      {
-        id: uuid.v4(),
-        title: '',
-        amount: '',
-        unit: '',
-        collected: false
-      },
-    ]
+    items: []
   }
 };
 
@@ -121,8 +105,9 @@ class Profilepic extends Component {
             //sendtodescription
             //this.props.sendToDescription(luuranko);
            // this.props.history.push('/ostoslista');
-            this.props.setUser(this.state.user);
+            this.props.setUser(this.props.stateForLoggedIn.user);
             this.setState({loading: false});
+            this.props.history.push('/ostoslista');
           }, 2000);
         });
       }, 2000);
