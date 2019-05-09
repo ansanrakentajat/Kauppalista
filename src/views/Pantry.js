@@ -30,10 +30,12 @@ class Pantry extends Component {
 }
 
 const divStyle = {
-  height: '80vh',
+  height: '70vh',
   overflow: 'auto',
-  display: 'flex',
-  flexDirection: 'column'
+  // display: 'flex',
+  // flexDirection: 'column',
+  backgroundColor: '#ecffea',
+  paddingBottom: '50px'
 };
 
 

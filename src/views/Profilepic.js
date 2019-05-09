@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {Button} from '@material-ui/core';
 import {upload, uploadTag} from '../util/MediaAPI';
-import uuid from 'uuid';
 
 //tyhjä description
 const luuranko = {

@@ -18,12 +18,12 @@ class PantryItem extends Component {
     return (
       <React.Fragment>
         <TableRow>
-          <TableCell>
+          <TableCell style={tableCellStyle}>
             <ContentEditable html={this.props.elementToPantryItem.title} onBlur={this.handleTitleChange} />
           </TableCell>
-          <TableCell>{this.props.elementToPantryItem.amount} {this.props.elementToPantryItem.unit}</TableCell>
-          <TableCell>{this.props.elementToPantryItem.dateAdded}</TableCell>
-          <TableCell>
+          <TableCell style={tableCellStyle}>{this.props.elementToPantryItem.amount} {this.props.elementToPantryItem.unit}</TableCell>
+          <TableCell style={tableCellStyle}>{this.props.elementToPantryItem.dateAdded}</TableCell>
+          <TableCell style={{padding: '1vw', textAlign: 'center'}}>
             <IconButton onClick={this.props.deletePantryItem.bind(this, this.props.elementToPantryItem.id)}>
               <Tooltip title="Delete">
                 <Avatar>
@@ -38,7 +38,9 @@ class PantryItem extends Component {
   }
 }
 
-
+const tableCellStyle = {
+  padding: '1vw',
+};
 PantryItem.propTypes = {
   elementToPantryItem: PropTypes.object,
   deletePantryItem: PropTypes.func

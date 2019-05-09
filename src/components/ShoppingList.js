@@ -34,6 +34,7 @@ class ShoppingList extends Component {
 const divStyle = {
     height: '70vh',
     overflow: 'auto',
+    backgroundColor: '#fff5ea'
 };
 
 ShoppingList.propTypes = {
