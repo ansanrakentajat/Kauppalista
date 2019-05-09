@@ -30,12 +30,16 @@ class OneRecipe extends Component {
     },
   };
 
-  testausta = () =>{
-    const testimielessä = JSON.parse(JSON.stringify({...this.props.calcPersentage()}));
+  testausta = () => {
+    const testimielessä = JSON.parse(JSON.stringify({ ...this.props.calcPersentage() }));
 
     console.log('testausta :', testimielessä);
   }
+  
+  paluuTesti = () => {
+    this.props.history.goBack();
 
+  }
 
 
   componentDidMount() {
@@ -54,6 +58,7 @@ class OneRecipe extends Component {
   render() {
 
     const { title, filename, media_type } = this.state.file;
+    /*
     let { description } = this.state.file;
     let ingredients = {
       ingredients: [
@@ -62,7 +67,7 @@ class OneRecipe extends Component {
         },
       ],
     };
-
+    */
     return (
       <React.Fragment>
         <div style={divstyle}>
@@ -94,12 +99,14 @@ class OneRecipe extends Component {
               ))}
             </div>
           </div>
-          <OneRecipeFooter goBack={this.props.history} />
+          <OneRecipeFooter goBack={this.paluuTesti} />
         </div>
       </React.Fragment>
     );
   }
 }
+//<OneRecipeFooter goBack={this.props.history} />
+
 const divstyle = {
   height: '80vh',
   overflow: 'auto',

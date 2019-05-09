@@ -394,7 +394,7 @@ class App extends Component {
   render() {
 
     return (
-      <Router basename='/~villeatu/periodi4/190503kauppalista'>
+      <Router basename='/~villeatu/periodi4/kauppalista'>
         <div className="App">
           <NavigationBar />
           <Route exact path="/" render={(props) => (
@@ -414,7 +414,7 @@ class App extends Component {
           </Route>
           <Route exact path="/reseptit" render={props => (
             <React.Fragment>
-              <Recipes {...props} calcPersentage={this.calcPersentage} picArray={this.state.recipeArray} statePantry={this.state.pantry} />
+              <Recipes {...props} calcPersentage={this.calcPersentage} picArray={this.state.recipeArray} statePantry={this.state.pantry} stateForLoggedIn={this.state} />
             </React.Fragment>
           )}>
           </Route>

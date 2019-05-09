@@ -6,7 +6,7 @@ class OneRecipeFooter extends Component{
   render() {
       return (
           <div style={footerStyle}>
-            <Button style={buttonStyle} onClick={this.props.history}>Back</Button>
+            <Button style={buttonStyle} onClick={this.props.goBack}>Back</Button>
           </div>
       );
   }
